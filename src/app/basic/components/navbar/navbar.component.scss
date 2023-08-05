@@ -1,0 +1,8 @@
+.active {
+  color: white;
+  background-color: rgb(26, 86, 219, 1);
+
+  &:is(.dark .dark\:hover\:text-black:hover) {
+    color: white;
+  }
+}

@@ -1,0 +1,138 @@
+<nav
+  class="bg-gray-200 bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-50 dark:bg-gray-800 dark:bg-clip-padding dark:backdrop-filter dark:backdrop-blur-lg dark:bg-opacity-70"
+>
+  <div
+    class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-2"
+  >
+    <a href="#" class="flex items-center">
+      <img src="../../../../assets/images/logo.png" class="h-10" alt="Logo" />
+      <span
+        class="self-center text-xl font-semibold whitespace-nowrap dark:text-white"
+        >RegionalnieLive</span
+      >
+    </a>
+    <div class="flex items-center lg:order-2">
+      <!-- <button
+        type="button"
+        class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+      >
+        Zaloguj się
+      </button> -->
+      <div
+        class="flex items-center mx-4 cursor-pointer"
+        (click)="onToggleTheme()"
+      >
+        <mat-icon class="text-black dark:text-white">{{ themeName }}</mat-icon>
+      </div>
+
+      <button
+        type="button"
+        class="flex bg-white mr-3 text-sm rounded-full lg:mr-0"
+        id="user-menu-button"
+        aria-expanded="false"
+        data-dropdown-toggle="user-dropdown"
+        data-dropdown-placement="bottom"
+      >
+        <span class="sr-only">Open user menu</span>
+        <img
+          class="w-9 h-9 rounded-full"
+          src="../../../../assets/images/userProfile.png"
+          alt="User Photo"
+        />
+      </button>
+      <!-- Dropdown menu -->
+      <div
+        class="z-50 hidden my-4 text-base list-none shadow bg-gray-200 bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-50 dark:bg-gray-800 dark:bg-clip-padding dark:backdrop-filter dark:backdrop-blur-lg dark:bg-opacity-70"
+        id="user-dropdown"
+      >
+        <div class="px-4 py-3">
+          <span class="block text-md font-bold text-black dark:text-white"
+            >Imię nazwisko</span
+          >
+          <span class="block text-md text-black truncate dark:text-white"
+            >nazwauzytkownika@poczta.com</span
+          >
+        </div>
+        <ul class="py-2" aria-labelledby="user-menu-button">
+          <li
+            class="flex px-4 py-2 text-black hover:bg-white dark:text-white dark:hover:text-black"
+          >
+            <mat-icon>settings</mat-icon>
+            <a class="px-2">Ustawienia</a>
+          </li>
+          <li
+            class="flex px-4 py-2 text-black hover:bg-white dark:text-white dark:hover:text-black"
+          >
+            <mat-icon>logout</mat-icon>
+            <a class="px-2">Wyloguj się</a>
+          </li>
+        </ul>
+      </div>
+      <button
+        data-collapse-toggle="navbar-user"
+        type="button"
+        class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-black rounded-lg lg:hidden hover:bg-black hover:text-white focus:outline-none dark:text-white dark:hover:bg-white dark:hover:text-black"
+        aria-controls="navbar-user"
+        aria-expanded="false"
+      >
+        <span class="sr-only">Open main menu</span>
+        <svg
+          class="w-5 h-5"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 17 14"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M1 1h15M1 7h15M1 13h15"
+          />
+        </svg>
+      </button>
+    </div>
+    <div
+      class="items-center justify-between hidden w-full lg:flex lg:w-auto lg:order-1"
+      id="navbar-user"
+    >
+      <ul
+        class="flex flex-col gap-4 lg:gap-0 lg:items-center font-medium p-4 lg:p-0 mt-4 rounded-lg lg:flex-row lg:space-x-8 lg:mt-0"
+      >
+        <li
+          routerLink="/dashboard"
+          routerLinkActive="active"
+          class="flex px-4 py-2 lg:py-1 text-black rounded cursor-pointer hover:bg-white dark:text-white dark:hover:text-black"
+        >
+          <mat-icon>dashboard</mat-icon>
+          <a class="px-2" aria-current="page">Dashboard</a>
+        </li>
+        <li
+          routerLink="/rozgrywki"
+          routerLinkActive="active"
+          class="flex px-4 py-2 lg:py-1 text-black rounded cursor-pointer hover:bg-white dark:text-white dark:hover:text-black"
+        >
+          <mat-icon>sports_soccer</mat-icon>
+          <a class="px-2" aria-current="page">Rozgrywki</a>
+        </li>
+        <li
+          routerLink="/wyniki"
+          routerLinkActive="active"
+          class="flex px-4 py-2 lg:py-1 text-black rounded cursor-pointer hover:bg-white dark:text-white dark:hover:text-black"
+        >
+          <mat-icon>table_chart</mat-icon>
+          <a class="px-2" aria-current="page">Wyniki</a>
+        </li>
+        <li
+          routerLink="/wiadomosci"
+          routerLinkActive="active"
+          class="flex px-4 py-2 lg:py-1 text-black rounded cursor-pointer hover:bg-white dark:text-white dark:hover:text-black"
+        >
+          <mat-icon>article</mat-icon>
+          <a class="px-2" aria-current="page">Wiadomości</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
