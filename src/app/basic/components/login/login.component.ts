@@ -31,8 +31,14 @@ export class LoginComponent implements OnInit {
     let rememberMeLogin = false;
 
     this.loginForm = new FormGroup({
-      email: new FormControl(emailLogin, Validators.required),
-      password: new FormControl(passwordLogin, Validators.required),
+      email: new FormControl(emailLogin, [
+        Validators.required,
+        Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
+      ]),
+      password: new FormControl(passwordLogin, [
+        Validators.required,
+        Validators.pattern('^.{8,}$'),
+      ]),
       rememberMe: new FormControl(rememberMeLogin, Validators.required),
     });
   }
