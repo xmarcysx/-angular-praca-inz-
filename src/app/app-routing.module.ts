@@ -5,9 +5,19 @@ import { MainPageComponent } from './basic/components/main-page/main-page.compon
 import { LoginComponent } from './basic/components/login/login.component';
 import { RegistrationComponent } from './basic/components/registration/registration.component';
 import { ForgotPasswordComponent } from './basic/components/forgot-password/forgot-password.component';
+import { StartingPageComponent } from './shared/components/starting-page/starting-page.component';
 
 const routes: Routes = [
-  { path: '', component: MainPageComponent },
+  {
+    path: '',
+    component: MainPageComponent,
+    children: [
+      {
+        path: '',
+        component: StartingPageComponent,
+      },
+    ],
+  },
   { path: 'dashboard', component: NavbarComponent },
   { path: 'logowanie', component: LoginComponent },
   { path: 'rejestracja', component: RegistrationComponent },

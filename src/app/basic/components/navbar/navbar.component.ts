@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Theme } from 'src/app/shared/enums/theme.enum';
+import { Router } from '@angular/router';
 import { ThemeStorageService } from 'src/app/shared/services/theme-storage.service';
 
 @Component({
@@ -8,16 +8,24 @@ import { ThemeStorageService } from 'src/app/shared/services/theme-storage.servi
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
+  isLoggedIn = true;
   root = window.document.documentElement;
   themeName: string = '';
 
-  constructor(private themeStorageService: ThemeStorageService) {}
+  constructor(
+    private _themeStorageService: ThemeStorageService,
+    private _router: Router
+  ) {}
 
   ngOnInit() {
-    this.themeName = this.themeStorageService.loadNavTheme();
+    this.themeName = this._themeStorageService.loadNavTheme();
   }
 
   onToggleTheme() {
-    this.themeName = this.themeStorageService.toggleNavTheme();
+    this.themeName = this._themeStorageService.toggleNavTheme();
+  }
+
+  navigateToLogin() {
+    this._router.navigate(['logowanie']);
   }
 }

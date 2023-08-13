@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +11,7 @@ export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   required = false;
 
-  constructor() {}
+  constructor(private _router: Router) {}
 
   ngOnInit(): void {
     this.initForm();
@@ -23,6 +24,14 @@ export class LoginComponent implements OnInit {
     } else {
       this.required = true;
     }
+  }
+
+  navigateToRegistration() {
+    this._router.navigate(['rejestracja']);
+  }
+
+  navigateToForgotPassword() {
+    this._router.navigate(['zapomnialem-haslo']);
   }
 
   private initForm() {

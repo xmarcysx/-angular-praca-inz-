@@ -109,8 +109,8 @@
               </div>
             </div>
             <a
-              href="#"
-              class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500"
+              class="cursor-pointer text-sm font-medium text-blue-600 hover:underline dark:text-blue-500"
+              (click)="navigateToForgotPassword()"
             >
               Nie pamiętasz hasła?
             </a>
@@ -124,8 +124,8 @@
           <p class="text-sm font-light text-gray-900 dark:text-gray-400">
             Nie masz jeszcze konta?
             <a
-              href="#"
-              class="font-medium text-blue-600 hover:underline dark:text-blue-500"
+              class="cursor-pointer font-medium text-blue-600 hover:underline dark:text-blue-500"
+              (click)="navigateToRegistration()"
             >
               Zarejestruj się
             </a>

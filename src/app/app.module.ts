@@ -11,6 +11,16 @@ import { LoginComponent } from './basic/components/login/login.component';
 import { RegistrationComponent } from './basic/components/registration/registration.component';
 import { ForgotPasswordComponent } from './basic/components/forgot-password/forgot-password.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { StartingPageComponent } from './shared/components/starting-page/starting-page.component';
+
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+
+import { AngularFireModule } from '@angular/fire/compat';
+import { environment } from '../environments/environment';
+import { HttpClientModule } from '@angular/common/http';
+import { LoadingBallComponent } from './shared/components/loading-ball/loading-ball.component';
 
 @NgModule({
   declarations: [
@@ -21,15 +31,21 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     LoginComponent,
     RegistrationComponent,
     ForgotPasswordComponent,
+    StartingPageComponent,
+    LoadingBallComponent,
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    HttpClientModule,
     MatIconModule,
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
+    ToastModule,
   ],
-  providers: [],
+  providers: [MessageService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
