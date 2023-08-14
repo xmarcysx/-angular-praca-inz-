@@ -2,142 +2,147 @@
   <div
     class="bg-gray-100 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-40 duration-500 text-gray-900 px-3.5 w-[450px] dark:bg-gray-800 dark:rounded-md dark:bg-clip-padding dark:backdrop-filter dark:backdrop-blur-lg dark:bg-opacity-40 dark:text-gray-100"
   >
-    <div class="px-6 py-8 mx-auto lg:py-0">
-      <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-        <h1
-          class="text-xl font-bold leading-tight tracking-tight text-center text-gray-900 md:text-2xl dark:text-white"
-        >
-          Logowanie
-        </h1>
-        <!-- LOGIN FORM -->
-        <form class="space-y-6" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-          <div>
-            <label
-              for="email"
-              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >
-              E-mail
-            </label>
-            <input
-              type="email"
-              id="email"
-              formControlName="email"
-              required
-              class="form-control bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="nazwa@poczta.pl"
-            />
-            <div class="h-2">
-              <span
-                *ngIf="
-                  (loginForm.get('email')?.touched &&
-                    (loginForm.get('email')?.hasError('required') ||
-                      loginForm.get('email')?.hasError('pattern'))) ||
-                  (loginForm.get('email')?.invalid &&
-                    loginForm?.invalid &&
-                    required)
-                "
-                class="text-red-600 text-sm mt-1"
-              >
-                <ng-container
-                  *ngIf="loginForm.get('email')?.hasError('required')"
-                >
-                  Pole jest wymagane.
-                </ng-container>
-                <ng-container
-                  *ngIf="loginForm.get('email')?.hasError('pattern')"
-                >
-                  Niepoprawny format adresu e-mail.
-                </ng-container>
-              </span>
-            </div>
-          </div>
-          <div>
-            <label
-              for="password"
-              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >
-              Hasło
-            </label>
-            <input
-              type="password"
-              id="password"
-              placeholder="••••••••"
-              formControlName="password"
-              required
-              class="form-control bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            />
-            <div class="h-2">
-              <span
-                *ngIf="
-                  (loginForm.get('password')?.touched &&
-                    (loginForm.get('password')?.hasError('required') ||
-                      loginForm.get('password')?.hasError('pattern'))) ||
-                  (loginForm.get('password')?.invalid &&
-                    loginForm?.invalid &&
-                    required)
-                "
-                class="text-red-600 text-sm mt-1"
-              >
-                <ng-container
-                  *ngIf="loginForm.get('password')?.hasError('required')"
-                >
-                  Pole jest wymagane.
-                </ng-container>
-                <ng-container
-                  *ngIf="loginForm.get('password')?.hasError('pattern')"
-                >
-                  Hasło musi zawierać conajmniej 8 znaków.
-                </ng-container>
-              </span>
-            </div>
-          </div>
-          <div class="flex items-center justify-between">
-            <div class="flex items-start">
-              <div class="flex items-center h-5">
-                <input
-                  id="remember"
-                  aria-describedby="remember"
-                  type="checkbox"
-                  formControlName="rememberMe"
-                  class="form-control w-4 h-4 border border-gray-300 rounded focus:ring-0 focus:ring-offset-0 bg-gray-50 focus:outline-0 dark:bg-gray-700 dark:border-gray-600"
-                />
-              </div>
-              <div class="ml-3 text-sm">
-                <label for="remember" class="text-gray-900 dark:text-gray-300">
-                  Zapamiętaj mnie
-                </label>
-              </div>
-            </div>
-            <a
-              class="cursor-pointer text-sm font-medium text-blue-600 hover:underline dark:text-blue-500"
-              (click)="navigateToForgotPassword()"
-            >
-              Nie pamiętasz hasła?
-            </a>
-          </div>
-          <button
-            type="submit"
-            class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+    <app-loading-ball *ngIf="loadingBall; else form"></app-loading-ball>
+    <ng-template #form>
+      <div class="px-6 py-8 mx-auto lg:py-0">
+        <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+          <h1
+            class="text-xl font-bold leading-tight tracking-tight text-center text-gray-900 md:text-2xl dark:text-white"
           >
-            Zaloguj
-          </button>
-          <p class="text-sm font-light text-gray-900 dark:text-gray-400">
-            Nie masz jeszcze konta?
-            <a
-              class="cursor-pointer font-medium text-blue-600 hover:underline dark:text-blue-500"
-              (click)="navigateToRegistration()"
+            Logowanie
+          </h1>
+          <form
+            class="space-y-6"
+            [formGroup]="loginForm"
+            (ngSubmit)="onSubmit()"
+          >
+            <div>
+              <label
+                for="email"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                E-mail
+              </label>
+              <input
+                type="email"
+                id="email"
+                formControlName="email"
+                required
+                class="form-control bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="nazwa@poczta.pl"
+              />
+              <div class="h-2">
+                <span
+                  *ngIf="
+                    (loginForm.get('email')?.touched &&
+                      (loginForm.get('email')?.hasError('required') ||
+                        loginForm.get('email')?.hasError('pattern'))) ||
+                    (loginForm.get('email')?.invalid &&
+                      loginForm?.invalid &&
+                      required)
+                  "
+                  class="text-red-600 text-sm mt-1"
+                >
+                  <ng-container
+                    *ngIf="loginForm.get('email')?.hasError('required')"
+                  >
+                    Pole jest wymagane.
+                  </ng-container>
+                  <ng-container
+                    *ngIf="loginForm.get('email')?.hasError('pattern')"
+                  >
+                    Niepoprawny format adresu e-mail.
+                  </ng-container>
+                </span>
+              </div>
+            </div>
+            <div>
+              <label
+                for="password"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Hasło
+              </label>
+              <input
+                type="password"
+                id="password"
+                placeholder="••••••••"
+                formControlName="password"
+                required
+                class="form-control bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              />
+              <div class="h-2">
+                <span
+                  *ngIf="
+                    (loginForm.get('password')?.touched &&
+                      (loginForm.get('password')?.hasError('required') ||
+                        loginForm.get('password')?.hasError('pattern'))) ||
+                    (loginForm.get('password')?.invalid &&
+                      loginForm?.invalid &&
+                      required)
+                  "
+                  class="text-red-600 text-sm mt-1"
+                >
+                  <ng-container
+                    *ngIf="loginForm.get('password')?.hasError('required')"
+                  >
+                    Pole jest wymagane.
+                  </ng-container>
+                  <ng-container
+                    *ngIf="loginForm.get('password')?.hasError('pattern')"
+                  >
+                    Hasło musi zawierać conajmniej 8 znaków.
+                  </ng-container>
+                </span>
+              </div>
+            </div>
+            <div class="flex items-center justify-between">
+              <div class="flex items-start">
+                <div class="flex items-center h-5">
+                  <input
+                    id="remember"
+                    aria-describedby="remember"
+                    type="checkbox"
+                    formControlName="rememberMe"
+                    class="form-control w-4 h-4 border border-gray-300 rounded focus:ring-0 focus:ring-offset-0 bg-gray-50 focus:outline-0 dark:bg-gray-700 dark:border-gray-600"
+                  />
+                </div>
+                <div class="ml-3 text-sm">
+                  <label
+                    for="remember"
+                    class="text-gray-900 dark:text-gray-300"
+                  >
+                    Zapamiętaj mnie
+                  </label>
+                </div>
+              </div>
+              <a
+                class="cursor-pointer text-sm font-medium text-blue-600 hover:underline dark:text-blue-500"
+                (click)="navigateToForgotPassword()"
+              >
+                Nie pamiętasz hasła?
+              </a>
+            </div>
+            <button
+              type="submit"
+              class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
-              Zarejestruj się
-            </a>
-          </p>
-          <!-- <div class="h-6 text-center rounded-md bg-red-600">
-            <span class="text-black font-bold text-sm mt-1">
-              Pole jest wymagane.
-            </span>
-          </div> -->
-        </form>
-        <!-- LOGIN FORM -->
+              Zaloguj
+            </button>
+            <p class="text-sm font-light text-gray-900 dark:text-gray-400">
+              Nie masz jeszcze konta?
+              <a
+                class="cursor-pointer font-medium text-blue-600 hover:underline dark:text-blue-500"
+                (click)="navigateToRegistration()"
+              >
+                Zarejestruj się
+              </a>
+            </p>
+          </form>
+        </div>
       </div>
-    </div>
+    </ng-template>
   </div>
 </div>
+
+<p-toast></p-toast>

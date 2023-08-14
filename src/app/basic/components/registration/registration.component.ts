@@ -94,6 +94,9 @@ export class RegistrationComponent {
   private _resetForm() {
     this.registrationForm.reset();
     this._clearAllErrors();
+    setTimeout(() => {
+      this.loadingBall = false;
+    }, 1500);
   }
 
   private _clearAllErrors() {
@@ -107,7 +110,7 @@ export class RegistrationComponent {
     const password = this.registrationForm.value.password;
     const username = this.registrationForm.value.username;
 
-    this._authService.signIn(email, password);
+    this._authService.signUp(email, password);
     this._firebaseService.addUserToDatabase(username);
   }
 }

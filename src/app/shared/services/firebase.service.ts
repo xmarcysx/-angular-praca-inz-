@@ -16,8 +16,6 @@ export class FirebaseService {
         username: username,
         img: this.img,
       })
-      .subscribe((response) => {
-        console.log(response);
-      });
+      .subscribe();
   }
 }

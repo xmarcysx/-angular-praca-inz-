@@ -13,7 +13,8 @@ export class AuthService {
     private _messageService: MessageService
   ) {}
 
-  async signIn(email: string, password: string): Promise<void> {
+  // rejestracja
+  async signUp(email: string, password: string): Promise<void> {
     try {
       const result = await this._angularFireAuth.createUserWithEmailAndPassword(
         email,
@@ -27,6 +28,31 @@ export class AuthService {
     }
   }
 
+  // logowanie
+  async signIn(email: string, password: string): Promise<void> {
+    try {
+      const result = await this._angularFireAuth.signInWithEmailAndPassword(
+        email,
+        password
+      );
+
+      if (result.user) {
+        this._router.navigate(['dashboard']);
+      }
+    } catch (error) {
+      this._handleAuthError(error);
+    }
+  }
+
+  // signOut() {
+  //   return this.afAuth.signOut()
+  //     .catch((error: FirebaseError) => {
+  //       // Obsługa błędu wylogowania
+  //       console.error('Firebase Error:', error.code, error.message);
+  //       throw error; // Przekaż dalej błąd
+  //     });
+  // }
+
   private _handleAuthError(error: any): void {
     switch (error.code) {
       case 'auth/email-already-in-use':
@@ -38,6 +64,15 @@ export class AuthService {
         this._showErrorMessage(
           'Wystąpił błąd sieci (taki jak przekroczenie limitu czasu, przerwane połączenie lub nieosiągalny host)'
         );
+        break;
+      case 'auth/user-not-found':
+        this._showErrorMessage('Podany użytkownik nie został znaleziony');
+        break;
+      case 'auth/wrong-password':
+        this._showErrorMessage('Podane hasło jest nieprawidłowe');
+        break;
+      case 'auth/user-disabled':
+        this._showErrorMessage('Podany użytkownik jest zablokowany');
         break;
       default:
         break;

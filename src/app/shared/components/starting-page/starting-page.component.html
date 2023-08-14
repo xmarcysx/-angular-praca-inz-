@@ -2,7 +2,7 @@
   <div
     class="bg-gray-100 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-40 duration-500 text-gray-900 px-3.5 w-9/12 dark:bg-gray-800 dark:rounded-md dark:bg-clip-padding dark:backdrop-filter dark:backdrop-blur-lg dark:bg-opacity-40 dark:text-gray-100"
   >
-    <div class="px-6 py-8 mx-auto lg:py-0">
+    <div class="px-6 sm:py-8 py-0 mx-auto lg:py-0">
       <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
         <h1
           class="text-xl font-bold leading-tight tracking-tight text-center text-gray-900 md:text-2xl dark:text-white"
@@ -17,7 +17,7 @@
           />
         </div>
 
-        <div class="w-100 flex justify-center">
+        <div class="w-100 hidden sm:flex justify-center">
           <div class="w-fit flex bg-white rounded-md">
             <img
               src="../../../../assets/images/teams/brzezina_osiek.png"
@@ -78,7 +78,7 @@
         </div>
 
         <div class="w-100 flex justify-center">
-          <div class="w-7/12 flex justify-center">
+          <div class="sm:w-7/12 w-100 flex justify-center">
             <p class="text-center font-semibold text-lg">
               Tutaj sprawdzisz wyniki wszystkich lokalnych drużyn od B klasy do
               4 ligi
@@ -89,7 +89,7 @@
         <div class="flex justify-center mt-3">
           <button
             type="submit"
-            class="w-1/2 text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            class="sm:w-1/2 w-100 text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             (click)="navigateToLogin()"
           >
             Przejdź do logowania
