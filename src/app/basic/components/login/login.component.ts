@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { LoginStorageService } from 'src/app/shared/services/login-storage.service';
 
 @Component({
   selector: 'app-login',
@@ -10,6 +11,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
+  hidePassword = true;
   loginForm!: FormGroup;
   required = false;
   loadingBall = false;
@@ -17,10 +19,12 @@ export class LoginComponent implements OnInit {
   constructor(
     private _router: Router,
     private _messageService: MessageService,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private _loginStorageService: LoginStorageService
   ) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.checkSessionStorage();
     this.initForm();
   }
 
@@ -34,6 +38,7 @@ export class LoginComponent implements OnInit {
         this.loadingBall = false;
         this._showError('Błąd', 'Wystąpił błąd podczas logowania');
       }
+      this._showSuccess('Sukces', 'Użytkownik został zalogowany');
       this._resetForm();
     } else {
       this.required = true;
@@ -51,6 +56,14 @@ export class LoginComponent implements OnInit {
   private _showError(summary: string, detail: string) {
     this._messageService.add({
       severity: 'error',
+      summary: summary,
+      detail: detail,
+    });
+  }
+
+  private _showSuccess(summary: string, detail: string) {
+    this._messageService.add({
+      severity: 'success',
       summary: summary,
       detail: detail,
     });
@@ -91,7 +104,26 @@ export class LoginComponent implements OnInit {
   private async _loginUser() {
     const email = this.loginForm.value.email;
     const password = this.loginForm.value.password;
+    const rememberMe = this.loginForm.get('rememberMe')?.value;
 
     this._authService.signIn(email, password);
+    if (rememberMe) {
+      this._loginStorageService.setLoginStorage(email, password);
+    }
+  }
+
+  private async checkSessionStorage() {
+    const getLoginStorage = this._loginStorageService.getLoginStorage();
+
+    if (getLoginStorage) {
+      this.loadingBall = true;
+      const loginSessionData = JSON.parse(getLoginStorage);
+      const email = loginSessionData.email;
+      const password = loginSessionData.password;
+
+      await this._authService.signIn(email, password);
+    } else {
+      return;
+    }
   }
 }

@@ -11,6 +11,7 @@ import { FirebaseService } from 'src/app/shared/services/firebase.service';
   styleUrls: ['./registration.component.scss'],
 })
 export class RegistrationComponent {
+  hidePassword: boolean = true;
   registrationForm!: FormGroup;
   required = false;
   loadingBall = false;
@@ -37,6 +38,7 @@ export class RegistrationComponent {
           this.loadingBall = false;
           this._showError('Błąd', 'Wystąpił błąd podczas rejestracji');
         }
+        this._showSuccess('Sukces', 'Użytkownik został zarejestrowany');
         this._resetForm();
       } else {
         this.required = false;
@@ -52,9 +54,21 @@ export class RegistrationComponent {
     this._router.navigate(['logowanie']);
   }
 
+  navigateToTerms() {
+    this._router.navigate(['regulamin']);
+  }
+
   private _showError(summary: string, detail: string) {
     this._messageService.add({
       severity: 'error',
+      summary: summary,
+      detail: detail,
+    });
+  }
+
+  private _showSuccess(summary: string, detail: string) {
+    this._messageService.add({
+      severity: 'success',
       summary: summary,
       detail: detail,
     });

@@ -1,6 +1,6 @@
 <div class="min-h-screen flex justify-center items-center">
   <div
-    class="bg-gray-100 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-40 duration-500 text-gray-900 px-3.5 w-[450px] dark:bg-gray-800 dark:rounded-md dark:bg-clip-padding dark:backdrop-filter dark:backdrop-blur-lg dark:bg-opacity-40 dark:text-gray-100"
+    class="bg-gray-100 rounded-md bg-clip-padding backdrop-blur-sm bg-opacity-40 duration-500 text-gray-900 px-3.5 w-[450px] dark:bg-gray-800 dark:rounded-md dark:bg-clip-padding dark:backdrop-blur-lg dark:bg-opacity-40 dark:text-gray-100"
   >
     <app-loading-ball *ngIf="loadingBall; else form"></app-loading-ball>
     <ng-template #form>
@@ -93,14 +93,27 @@
               >
                 Hasło
               </label>
-              <input
-                type="password"
-                id="password"
-                placeholder="••••••••"
-                formControlName="password"
-                required
-                class="form-control bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              />
+              <div class="relative">
+                <input
+                  [type]="hidePassword ? 'password' : 'text'"
+                  id="password"
+                  placeholder="••••••••"
+                  formControlName="password"
+                  required
+                  class="form-control bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                />
+                <button
+                  mat-icon-button
+                  class="absolute right-2 top-1/2 -translate-y-1/2"
+                  (click)="hidePassword = !hidePassword"
+                  type="button"
+                  aria-label="Toggle password visibility"
+                >
+                  <mat-icon>
+                    {{ hidePassword ? "visibility_off" : "visibility" }}
+                  </mat-icon>
+                </button>
+              </div>
               <div class="h-2">
                 <span
                   *ngIf="
@@ -139,14 +152,27 @@
               >
                 Powtórz hasło
               </label>
-              <input
-                type="password"
-                id="passwordRepeat"
-                placeholder="••••••••"
-                formControlName="passwordRepeat"
-                required
-                class="form-control bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              />
+              <div class="relative">
+                <input
+                  [type]="hidePassword ? 'password' : 'text'"
+                  id="passwordRepeat"
+                  placeholder="••••••••"
+                  formControlName="passwordRepeat"
+                  required
+                  class="form-control bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                />
+                <button
+                  mat-icon-button
+                  class="absolute right-2 top-1/2 -translate-y-1/2"
+                  (click)="hidePassword = !hidePassword"
+                  type="button"
+                  aria-label="Toggle password visibility"
+                >
+                  <mat-icon>
+                    {{ hidePassword ? "visibility_off" : "visibility" }}
+                  </mat-icon>
+                </button>
+              </div>
               <div class="h-2">
                 <span
                   *ngIf="
@@ -198,13 +224,11 @@
                 </div>
               </div>
               <div class="ml-3 text-sm">
-                <label
-                  for="terms"
-                  class="font-light text-gray-900 dark:text-gray-300"
-                >
+                <label class="font-light text-gray-900 dark:text-gray-300">
                   Akceptuję
                   <a
-                    class="font-medium text-primary-900 hover:underline dark:text-primary-500"
+                    (click)="navigateToTerms()"
+                    class="cursor-pointer font-medium text-primary-900 hover:underline dark:text-primary-500"
                   >
                     Regulamin
                   </a>
@@ -232,5 +256,3 @@
     </ng-template>
   </div>
 </div>
-
-<p-toast></p-toast>

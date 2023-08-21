@@ -6,6 +6,8 @@ import { LoginComponent } from './basic/components/login/login.component';
 import { RegistrationComponent } from './basic/components/registration/registration.component';
 import { ForgotPasswordComponent } from './basic/components/forgot-password/forgot-password.component';
 import { StartingPageComponent } from './shared/components/starting-page/starting-page.component';
+import { TermsComponent } from './shared/components/terms/terms.component';
+import { AuthGuard } from './shared/services/auth-guard';
 
 const routes: Routes = [
   {
@@ -18,10 +20,11 @@ const routes: Routes = [
       },
     ],
   },
-  { path: 'dashboard', component: NavbarComponent },
+  { path: 'dashboard', component: NavbarComponent, canActivate: [AuthGuard] },
   { path: 'logowanie', component: LoginComponent },
   { path: 'rejestracja', component: RegistrationComponent },
   { path: 'zapomnialem-haslo', component: ForgotPasswordComponent },
+  { path: 'regulamin', component: TermsComponent },
 ];
 
 @NgModule({

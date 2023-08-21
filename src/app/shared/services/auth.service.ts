@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
+import { LoginStorageService } from './login-storage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -10,8 +11,12 @@ export class AuthService {
   constructor(
     private _angularFireAuth: AngularFireAuth,
     private _router: Router,
-    private _messageService: MessageService
+    private _messageService: MessageService,
+    @Inject(LoginStorageService)
+    private _loginStorageService: LoginStorageService
   ) {}
+
+  isLoggedIn: boolean = false;
 
   // rejestracja
   async signUp(email: string, password: string): Promise<void> {
@@ -21,7 +26,7 @@ export class AuthService {
         password
       );
       if (result.user) {
-        this._router.navigate(['dashboard']);
+        this._router.navigate(['logowanie']);
       }
     } catch (error) {
       this._handleAuthError(error);
@@ -35,12 +40,22 @@ export class AuthService {
         email,
         password
       );
-
       if (result.user) {
+        this.isLoggedIn = true;
         this._router.navigate(['dashboard']);
       }
     } catch (error) {
       this._handleAuthError(error);
+    }
+  }
+
+  isAuthenticated(): boolean {
+    const loginSessionData = this._loginStorageService.getLoginStorage();
+
+    if (this.isLoggedIn || loginSessionData?.trim()) {
+      return true;
+    } else {
+      return false;
     }
   }
 
