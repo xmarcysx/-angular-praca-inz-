@@ -49,10 +49,26 @@ export class AuthService {
     }
   }
 
-  isAuthenticated(): boolean {
-    const loginSessionData = this._loginStorageService.getLoginStorage();
+  async resetPassword(email: string): Promise<void> {
+    this._angularFireAuth
+      .sendPasswordResetEmail(email)
+      .then(() => {
+        this._messageService.add({
+          severity: 'success',
+          summary: 'Sukces',
+          detail: 'Email z prośbą o zresetowanie hasła został wysłany',
+        });
+        this._router.navigate(['logowanie']);
+      })
+      .catch((error) => {
+        this._handleAuthError(error);
+      });
+  }
 
-    if (this.isLoggedIn || loginSessionData?.trim()) {
+  isAuthenticated(): boolean {
+    const loginLocalStorageData = this._loginStorageService.getLoginStorage();
+
+    if (this.isLoggedIn || loginLocalStorageData?.trim()) {
       return true;
     } else {
       return false;

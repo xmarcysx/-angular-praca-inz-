@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { FirebaseService } from 'src/app/shared/services/firebase.service';
+import { FormService } from 'src/app/shared/services/form.service';
 
 @Component({
   selector: 'app-registration',
@@ -18,7 +19,7 @@ export class RegistrationComponent {
 
   constructor(
     private _router: Router,
-    private _messageService: MessageService,
+    private _formService: FormService,
     private _authService: AuthService,
     private _firebaseService: FirebaseService
   ) {}
@@ -36,9 +37,15 @@ export class RegistrationComponent {
           await this._registerUser();
         } catch (error) {
           this.loadingBall = false;
-          this._showError('Błąd', 'Wystąpił błąd podczas rejestracji');
+          this._formService.showError(
+            'Błąd',
+            'Wystąpił błąd podczas rejestracji'
+          );
         }
-        this._showSuccess('Sukces', 'Użytkownik został zarejestrowany');
+        this._formService.showSuccess(
+          'Sukces',
+          'Użytkownik został zarejestrowany'
+        );
         this._resetForm();
       } else {
         this.required = false;
@@ -58,28 +65,12 @@ export class RegistrationComponent {
     this._router.navigate(['regulamin']);
   }
 
-  private _showError(summary: string, detail: string) {
-    this._messageService.add({
-      severity: 'error',
-      summary: summary,
-      detail: detail,
-    });
-  }
-
-  private _showSuccess(summary: string, detail: string) {
-    this._messageService.add({
-      severity: 'success',
-      summary: summary,
-      detail: detail,
-    });
-  }
-
   private _passwordsMatchCheck(): boolean {
     if (
       this.registrationForm.value.password !==
       this.registrationForm.value.passwordRepeat
     ) {
-      this._showError('Błąd', 'Podane hasła różnią się');
+      this._formService.showError('Błąd', 'Podane hasła różnią się');
       return false;
     } else {
       return true;
@@ -107,16 +98,10 @@ export class RegistrationComponent {
 
   private _resetForm() {
     this.registrationForm.reset();
-    this._clearAllErrors();
+    this._formService.clearAllErrors(this.registrationForm);
     setTimeout(() => {
       this.loadingBall = false;
     }, 1500);
-  }
-
-  private _clearAllErrors() {
-    Object.keys(this.registrationForm.controls).forEach((controlName) => {
-      this.registrationForm.controls[controlName].setErrors(null);
-    });
   }
 
   private async _registerUser() {

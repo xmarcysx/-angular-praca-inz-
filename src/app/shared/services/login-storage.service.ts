@@ -11,10 +11,10 @@ export class LoginStorageService {
       email: email,
       password: password,
     };
-    sessionStorage.setItem('LoginStorage', JSON.stringify(loginObject));
+    localStorage.setItem('LoginStorage', JSON.stringify(loginObject));
   }
 
   getLoginStorage() {
-    return sessionStorage.getItem('LoginStorage');
+    return localStorage.getItem('LoginStorage');
   }
 }

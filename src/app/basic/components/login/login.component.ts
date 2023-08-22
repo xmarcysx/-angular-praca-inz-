@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { FormService } from 'src/app/shared/services/form.service';
 import { LoginStorageService } from 'src/app/shared/services/login-storage.service';
 
 @Component({
@@ -18,13 +19,13 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private _router: Router,
-    private _messageService: MessageService,
     private _authService: AuthService,
-    private _loginStorageService: LoginStorageService
+    private _loginStorageService: LoginStorageService,
+    private _formService: FormService
   ) {}
 
   ngOnInit() {
-    this.checkSessionStorage();
+    this.checkLocalStorage();
     this.initForm();
   }
 
@@ -36,9 +37,9 @@ export class LoginComponent implements OnInit {
         await this._loginUser();
       } catch (error) {
         this.loadingBall = false;
-        this._showError('Błąd', 'Wystąpił błąd podczas logowania');
+        this._formService.showError('Błąd', 'Wystąpił błąd podczas logowania');
       }
-      this._showSuccess('Sukces', 'Użytkownik został zalogowany');
+      this._formService.showSuccess('Sukces', 'Użytkownik został zalogowany');
       this._resetForm();
     } else {
       this.required = true;
@@ -53,34 +54,12 @@ export class LoginComponent implements OnInit {
     this._router.navigate(['zapomnialem-haslo']);
   }
 
-  private _showError(summary: string, detail: string) {
-    this._messageService.add({
-      severity: 'error',
-      summary: summary,
-      detail: detail,
-    });
-  }
-
-  private _showSuccess(summary: string, detail: string) {
-    this._messageService.add({
-      severity: 'success',
-      summary: summary,
-      detail: detail,
-    });
-  }
-
   private _resetForm() {
     this.loginForm.reset();
-    this._clearAllErrors();
+    this._formService.clearAllErrors(this.loginForm);
     setTimeout(() => {
       this.loadingBall = false;
     }, 1500);
-  }
-
-  private _clearAllErrors() {
-    Object.keys(this.loginForm.controls).forEach((controlName) => {
-      this.loginForm.controls[controlName].setErrors(null);
-    });
   }
 
   private initForm() {
@@ -112,14 +91,14 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  private async checkSessionStorage() {
+  private async checkLocalStorage() {
     const getLoginStorage = this._loginStorageService.getLoginStorage();
 
     if (getLoginStorage) {
       this.loadingBall = true;
-      const loginSessionData = JSON.parse(getLoginStorage);
-      const email = loginSessionData.email;
-      const password = loginSessionData.password;
+      const loginLocalStorageData = JSON.parse(getLoginStorage);
+      const email = loginLocalStorageData.email;
+      const password = loginLocalStorageData.password;
 
       await this._authService.signIn(email, password);
     } else {

@@ -45,9 +45,48 @@ $regionalnielive-theme: mat.define-light-theme(
 
 html,
 body {
+  display: flex;
   height: 100%;
 }
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+app-starting-page {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+app-navbar {
+  display: flex;
+}
+
+app-terms {
+  width: fit-content;
+  overflow-y: auto;
+  margin: auto;
+
+  & {
+    --sb-track-color: rgb(229, 231, 235);
+    --sb-thumb-color: rgb(28, 100, 242);
+    --sb-size: 10px;
+
+    scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
+  }
+
+  &::-webkit-scrollbar {
+    width: var(--sb-size);
+  }
+
+  &::-webkit-scrollbar-track {
+    background: var(--sb-track-color);
+    border-radius: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--sb-thumb-color);
+    border-radius: 5px;
+  }
 }

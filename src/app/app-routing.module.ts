@@ -18,13 +18,16 @@ const routes: Routes = [
         path: '',
         component: StartingPageComponent,
       },
+      {
+        path: 'regulamin',
+        component: TermsComponent,
+      },
     ],
   },
   { path: 'dashboard', component: NavbarComponent, canActivate: [AuthGuard] },
   { path: 'logowanie', component: LoginComponent },
   { path: 'rejestracja', component: RegistrationComponent },
   { path: 'zapomnialem-haslo', component: ForgotPasswordComponent },
-  { path: 'regulamin', component: TermsComponent },
 ];
 
 @NgModule({
