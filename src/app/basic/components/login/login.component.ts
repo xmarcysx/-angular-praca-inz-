@@ -39,7 +39,6 @@ export class LoginComponent implements OnInit {
         this.loadingBall = false;
         this._formService.showError('Błąd', 'Wystąpił błąd podczas logowania');
       }
-      this._formService.showSuccess('Sukces', 'Użytkownik został zalogowany');
       this._resetForm();
     } else {
       this.required = true;

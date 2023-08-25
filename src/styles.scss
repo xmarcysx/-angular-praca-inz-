@@ -63,6 +63,9 @@ app-navbar {
   display: flex;
 }
 
+app-about-us,
+app-contact,
+app-privacy-policy,
 app-terms {
   width: fit-content;
   overflow-y: auto;
@@ -89,4 +92,9 @@ app-terms {
     background: var(--sb-thumb-color);
     border-radius: 5px;
   }
+}
+
+.p-toast {
+  margin-top: 40px;
+  z-index: 100;
 }

@@ -3,18 +3,18 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
-  selector: 'app-terms',
-  templateUrl: './terms.component.html',
-  styleUrls: ['./terms.component.scss'],
+  selector: 'app-privacy-policy',
+  templateUrl: './privacy-policy.component.html',
+  styleUrls: ['./privacy-policy.component.scss'],
 })
-export class TermsComponent {
+export class PrivacyPolicyComponent {
   constructor(private _router: Router, private _authService: AuthService) {}
 
-  navigateToRegistration() {
+  navigateToDashboard() {
     if (this._authService.isLoggedIn) {
       this._router.navigate(['dashboard']);
     } else {
-      this._router.navigate(['rejestracja']);
+      this._router.navigate(['']);
     }
   }
 }

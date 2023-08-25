@@ -17,6 +17,7 @@ export class AuthService {
   ) {}
 
   isLoggedIn: boolean = false;
+  email: string = '';
 
   // rejestracja
   async signUp(email: string, password: string): Promise<void> {
@@ -35,18 +36,24 @@ export class AuthService {
 
   // logowanie
   async signIn(email: string, password: string): Promise<void> {
-    try {
-      const result = await this._angularFireAuth.signInWithEmailAndPassword(
-        email,
-        password
-      );
-      if (result.user) {
+    this._angularFireAuth
+      .signInWithEmailAndPassword(email, password)
+      .then(() => {
+        this._messageService.add({
+          severity: 'success',
+          summary: 'Sukces',
+          detail: 'Użytkownik został zalogowany',
+        });
         this.isLoggedIn = true;
+        this.email = email;
         this._router.navigate(['dashboard']);
-      }
-    } catch (error) {
-      this._handleAuthError(error);
-    }
+      })
+      .catch((error) => {
+        this._handleAuthError(error);
+        this._router
+          .navigateByUrl('/', { skipLocationChange: true })
+          .then(() => this._router.navigate(['/logowanie']));
+      });
   }
 
   async resetPassword(email: string): Promise<void> {
@@ -66,9 +73,7 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
-    const loginLocalStorageData = this._loginStorageService.getLoginStorage();
-
-    if (this.isLoggedIn || loginLocalStorageData?.trim()) {
+    if (this.isLoggedIn) {
       return true;
     } else {
       return false;

@@ -2,7 +2,7 @@
   class="flex justify-between flex-grow mb-2 z-20 w-100 bg-gray-200 bg-clip-padding bg-opacity-50 dark:bg-gray-800 dark:bg-clip-padding dark:bg-opacity-70"
 >
   <div class="flex flex-wrap items-center flex-grow justify-between p-2 w-100">
-    <a href="#" class="flex items-center">
+    <a routerLink="/dashboard" class="flex items-center">
       <img src="../../../../assets/images/logo.png" class="h-10" alt="Logo" />
       <span
         class="self-center text-xl font-semibold whitespace-nowrap dark:text-white"
@@ -19,12 +19,6 @@
       </button>
     </div>
     <div class="flex items-center lg:order-2" *ngIf="isLoggedIn">
-      <!-- <button
-        type="button"
-        class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-      >
-        Zaloguj się
-      </button> -->
       <div
         class="flex items-center mx-4 cursor-pointer"
         (click)="onToggleTheme()"
@@ -33,6 +27,7 @@
       </div>
 
       <button
+        (click)="openSettings()"
         type="button"
         class="flex bg-white mr-3 text-sm rounded-full lg:mr-0"
         id="user-menu-button"
@@ -48,33 +43,36 @@
         />
       </button>
       <!-- Dropdown menu -->
-      <div
-        class="z-50 hidden my-4 text-base list-none shadow bg-gray-200 bg-clip-padding bg-opacity-50 dark:bg-gray-800 dark:bg-clip-padding dark:bg-opacity-70"
-        id="user-dropdown"
-      >
-        <div class="px-4 py-3">
-          <span class="block text-md font-bold text-black dark:text-white"
-            >Imię nazwisko</span
-          >
-          <span class="block text-md text-black truncate dark:text-white"
-            >nazwauzytkownika@poczta.com</span
-          >
+      <div [hidden]="isHidden" class="absolute right-0 top-10">
+        <div
+          class="z-1 my-4 text-base list-none shadow bg-gray-200 bg-clip-padding bg-opacity-50 dark:bg-gray-800 dark:bg-clip-padding dark:bg-opacity-70"
+          id="user-dropdown"
+        >
+          <div class="px-4 py-3">
+            <span class="block text-md font-bold text-black dark:text-white"
+              >imie i nazwisko</span
+            >
+            <span class="block text-md text-black truncate dark:text-white">{{
+              email
+            }}</span>
+          </div>
+          <ul class="py-2" aria-labelledby="user-menu-button">
+            <li
+              class="flex px-4 py-2 text-black hover:bg-white dark:text-white dark:hover:text-black"
+            >
+              <mat-icon>settings</mat-icon>
+              <a class="px-2 cursor-pointer">Ustawienia</a>
+            </li>
+            <li
+              class="flex px-4 py-2 text-black hover:bg-white dark:text-white dark:hover:text-black"
+            >
+              <mat-icon>logout</mat-icon>
+              <a class="px-2 cursor-pointer">Wyloguj się</a>
+            </li>
+          </ul>
         </div>
-        <ul class="py-2" aria-labelledby="user-menu-button">
-          <li
-            class="flex px-4 py-2 text-black hover:bg-white dark:text-white dark:hover:text-black"
-          >
-            <mat-icon>settings</mat-icon>
-            <a class="px-2">Ustawienia</a>
-          </li>
-          <li
-            class="flex px-4 py-2 text-black hover:bg-white dark:text-white dark:hover:text-black"
-          >
-            <mat-icon>logout</mat-icon>
-            <a class="px-2">Wyloguj się</a>
-          </li>
-        </ul>
       </div>
+
       <button
         data-collapse-toggle="navbar-user"
         type="button"
