@@ -38,7 +38,7 @@
         <span class="sr-only">Open user menu</span>
         <img
           class="w-9 h-9 rounded-full"
-          src="../../../../assets/images/userProfile.png"
+          src="{{ userData?.img ? userData.img : logo }}"
           alt="User Photo"
         />
       </button>
@@ -49,22 +49,24 @@
           id="user-dropdown"
         >
           <div class="px-4 py-3">
-            <span class="block text-md font-bold text-black dark:text-white"
-              >imie i nazwisko</span
-            >
+            <span class="block text-md font-bold text-black dark:text-white">{{
+              userData?.username
+            }}</span>
             <span class="block text-md text-black truncate dark:text-white">{{
-              email
+              userData?.email
             }}</span>
           </div>
           <ul class="py-2" aria-labelledby="user-menu-button">
             <li
               class="flex px-4 py-2 text-black hover:bg-white dark:text-white dark:hover:text-black"
+              (click)="navigateToSettings()"
             >
               <mat-icon>settings</mat-icon>
               <a class="px-2 cursor-pointer">Ustawienia</a>
             </li>
             <li
               class="flex px-4 py-2 text-black hover:bg-white dark:text-white dark:hover:text-black"
+              (click)="logout()"
             >
               <mat-icon>logout</mat-icon>
               <a class="px-2 cursor-pointer">Wyloguj się</a>

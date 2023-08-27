@@ -12,7 +12,6 @@ export class AuthService {
     private _angularFireAuth: AngularFireAuth,
     private _router: Router,
     private _messageService: MessageService,
-    @Inject(LoginStorageService)
     private _loginStorageService: LoginStorageService
   ) {}
 
@@ -46,7 +45,7 @@ export class AuthService {
         });
         this.isLoggedIn = true;
         this.email = email;
-        this._router.navigate(['dashboard']);
+        this._router.navigate(['ustawienia']);
       })
       .catch((error) => {
         this._handleAuthError(error);
@@ -56,6 +55,7 @@ export class AuthService {
       });
   }
 
+  //resetowanie hasła
   async resetPassword(email: string): Promise<void> {
     this._angularFireAuth
       .sendPasswordResetEmail(email)
@@ -80,14 +80,24 @@ export class AuthService {
     }
   }
 
-  // signOut() {
-  //   return this.afAuth.signOut()
-  //     .catch((error: FirebaseError) => {
-  //       // Obsługa błędu wylogowania
-  //       console.error('Firebase Error:', error.code, error.message);
-  //       throw error; // Przekaż dalej błąd
-  //     });
-  // }
+  //wylogowanie
+  async signOut(): Promise<void> {
+    return this._angularFireAuth
+      .signOut()
+      .then(() => {
+        this._messageService.add({
+          severity: 'success',
+          summary: 'Sukces',
+          detail: 'Użytkownik został wylogowany',
+        });
+        this._router.navigate(['/']);
+        this.isLoggedIn = false;
+        this._loginStorageService.removeLoginStorage();
+      })
+      .catch((error) => {
+        this._handleAuthError(error);
+      });
+  }
 
   private _handleAuthError(error: any): void {
     switch (error.code) {

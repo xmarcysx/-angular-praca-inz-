@@ -110,6 +110,6 @@ export class RegistrationComponent {
     const username = this.registrationForm.value.username;
 
     this._authService.signUp(email, password);
-    this._firebaseService.addUserToDatabase(username);
+    this._firebaseService.addUserToDatabase(username, email);
   }
 }

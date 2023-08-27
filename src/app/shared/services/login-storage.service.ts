@@ -17,4 +17,8 @@ export class LoginStorageService {
   getLoginStorage() {
     return localStorage.getItem('LoginStorage');
   }
+
+  removeLoginStorage() {
+    localStorage.removeItem('LoginStorage');
+  }
 }
