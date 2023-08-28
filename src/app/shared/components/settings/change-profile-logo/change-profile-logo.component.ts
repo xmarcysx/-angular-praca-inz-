@@ -7,6 +7,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./change-profile-logo.component.scss'],
 })
 export class ChangeProfileLogoComponent {
+  loadingBall = false;
+  fileName = '';
+
   constructor(private _router: Router) {}
 
   navigateToSettings() {
