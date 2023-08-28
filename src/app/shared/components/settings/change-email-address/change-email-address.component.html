@@ -1,0 +1,186 @@
+<div class="flex justify-center items-center">
+  <div
+    class="bg-gray-100 rounded-md bg-clip-padding backdrop-filter bg-opacity-40 duration-500 text-gray-900 px-3.5 w-[500px] dark:bg-gray-800 dark:rounded-md dark:bg-clip-padding dark:backdrop-filter dark:bg-opacity-40 dark:text-gray-100"
+  >
+    <app-loading-ball *ngIf="loadingBall; else form"></app-loading-ball>
+    <ng-template #form>
+      <div class="px-6 py-8 mx-auto lg:py-0">
+        <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+          <h1
+            class="text-xl font-bold leading-tight tracking-tight text-center text-gray-900 md:text-2xl dark:text-white"
+          >
+            Zmiana adresu e-mail
+          </h1>
+          <!-- EMAIL CHANGE FORM -->
+          <form
+            class="space-y-6"
+            [formGroup]="newEmailForm"
+            (ngSubmit)="onSubmit()"
+          >
+            <div>
+              <label
+                for="before-email"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Poprzedni adres e-mail
+              </label>
+              <div class="relative">
+                <input
+                  type="text"
+                  id="beforeEmail"
+                  placeholder="nazwa@poczta.pl"
+                  formControlName="beforeEmail"
+                  required
+                  class="form-control bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                />
+              </div>
+              <div class="h-2">
+                <span
+                  *ngIf="
+                    (newEmailForm.get('beforeEmail')?.touched &&
+                      (newEmailForm.get('beforeEmail')?.hasError('required') ||
+                        newEmailForm
+                          .get('beforeEmail')
+                          ?.hasError('pattern'))) ||
+                    (newEmailForm.get('beforeEmail')?.invalid &&
+                      newEmailForm?.invalid &&
+                      required)
+                  "
+                  class="text-red-600 text-sm mt-1"
+                >
+                  <ng-container
+                    *ngIf="
+                      newEmailForm.get('beforeEmail')?.hasError('required')
+                    "
+                  >
+                    Pole jest wymagane.
+                  </ng-container>
+                  <ng-container
+                    *ngIf="newEmailForm.get('beforeEmail')?.hasError('pattern')"
+                  >
+                    Niepoprawny format adresu e-mail.
+                  </ng-container>
+                </span>
+              </div>
+            </div>
+            <div>
+              <label
+                for="newEmail"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Nowy adres e-mail
+              </label>
+              <div class="relative">
+                <input
+                  type="text"
+                  id="newEmail"
+                  placeholder="nazwa@poczta.pl"
+                  formControlName="newEmail"
+                  required
+                  class="form-control bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                />
+              </div>
+              <div class="h-2">
+                <span
+                  *ngIf="
+                    (newEmailForm.get('newEmail')?.touched &&
+                      (newEmailForm.get('newEmail')?.hasError('required') ||
+                        newEmailForm.get('newEmail')?.hasError('pattern'))) ||
+                    (newEmailForm.get('newEmail')?.invalid &&
+                      newEmailForm?.invalid &&
+                      required)
+                  "
+                  class="text-red-600 text-sm mt-1"
+                >
+                  <ng-container
+                    *ngIf="newEmailForm.get('newEmail')?.hasError('required')"
+                  >
+                    Pole jest wymagane.
+                  </ng-container>
+                  <ng-container
+                    *ngIf="newEmailForm.get('newEmail')?.hasError('pattern')"
+                  >
+                    Niepoprawny format adresu e-mail.
+                  </ng-container>
+                </span>
+              </div>
+            </div>
+
+            <div>
+              <label
+                for="newEmailRepeat"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Powtórz nowy adres e-mail
+              </label>
+              <div class="relative">
+                <input
+                  type="text"
+                  id="newEmailRepeat"
+                  placeholder="nazwa@poczta.pl"
+                  formControlName="newEmailRepeat"
+                  required
+                  class="form-control bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                />
+              </div>
+              <div class="h-2">
+                <span
+                  *ngIf="
+                    (newEmailForm.get('newEmailRepeat')?.touched &&
+                      (newEmailForm
+                        .get('newEmailRepeat')
+                        ?.hasError('required') ||
+                        newEmailForm
+                          .get('newEmailRepeat')
+                          ?.hasError('pattern'))) ||
+                    (newEmailForm.get('newEmailRepeat')?.invalid &&
+                      newEmailForm?.invalid &&
+                      required)
+                  "
+                  class="text-red-600 text-sm mt-1"
+                >
+                  <ng-container
+                    *ngIf="
+                      newEmailForm.get('newEmailRepeat')?.hasError('required')
+                    "
+                  >
+                    Pole jest wymagane.
+                  </ng-container>
+                  <ng-container
+                    *ngIf="
+                      newEmailForm.get('newEmailRepeat')?.hasError('pattern')
+                    "
+                  >
+                    Niepoprawny format adresu e-mail.
+                  </ng-container>
+                </span>
+              </div>
+            </div>
+
+            <div class="flex justify-center w-full gap-5">
+              <button
+                (click)="navigateToSettings()"
+                class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              >
+                Powrót
+              </button>
+
+              <button
+                type="submit"
+                class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              >
+                Zmień
+              </button>
+            </div>
+            <!-- <div class="h-6 text-center rounded-md bg-red-600">
+            <span class="text-black font-bold text-sm mt-1">
+              Pole jest wymagane.
+            </span>
+          </div> -->
+          </form>
+          <!-- FORGOT PASSWORD FORM -->
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</div>

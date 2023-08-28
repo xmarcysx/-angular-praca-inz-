@@ -99,6 +99,39 @@ export class AuthService {
       });
   }
 
+  async changeEmail(beforeEmail: string, newEmail: string) {
+    this._angularFireAuth.currentUser.then((user) => {
+      console.log(beforeEmail);
+
+      if (beforeEmail === user?.email) {
+      } else {
+        this._messageService.add({
+          severity: 'error',
+          summary: 'Błąd',
+          detail: 'Poprzedni adres email jest nieprawidłowy',
+        });
+        return;
+      }
+      console.log(user?.email);
+
+      // if (user) {
+      //   user
+      //     .updateEmail(newEmail)
+      //     .then(() => {
+      //       this._messageService.add({
+      //         severity: 'success',
+      //         summary: 'Sukces',
+      //         detail: 'Użytkownik został wylogowany',
+      //       });
+      //       this._router.navigate(['/ustawienia']);
+      //     })
+      //     .catch((error) => {
+      //       this._handleAuthError(error);
+      //     });
+      // }
+    });
+  }
+
   private _handleAuthError(error: any): void {
     switch (error.code) {
       case 'auth/email-already-in-use':

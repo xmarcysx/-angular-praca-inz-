@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
   }
 
   navigateToForgotPassword() {
-    this._router.navigate(['zapomnialem-haslo']);
+    this._router.navigate(['zapomnialem_haslo']);
   }
 
   private _resetForm() {

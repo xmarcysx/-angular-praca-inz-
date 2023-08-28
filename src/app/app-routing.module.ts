@@ -11,6 +11,10 @@ import { AboutUsComponent } from './shared/components/about-us/about-us.componen
 import { PrivacyPolicyComponent } from './shared/components/privacy-policy/privacy-policy.component';
 import { ContactComponent } from './shared/components/contact/contact.component';
 import { SettingsComponent } from './shared/components/settings/settings.component';
+import { ChangeUsernameComponent } from './shared/components/settings/change-username/change-username.component';
+import { ChangeProfileLogoComponent } from './shared/components/settings/change-profile-logo/change-profile-logo.component';
+import { ChangePasswordComponent } from './shared/components/settings/change-password/change-password.component';
+import { ChangeEmailAddressComponent } from './shared/components/settings/change-email-address/change-email-address.component';
 
 const routes: Routes = [
   {
@@ -19,12 +23,32 @@ const routes: Routes = [
     children: [
       { path: '', component: StartingPageComponent },
       { path: 'regulamin', component: TermsComponent },
-      { path: 'o-nas', component: AboutUsComponent },
-      { path: 'polityka-prywatnosci', component: PrivacyPolicyComponent },
+      { path: 'o_nas', component: AboutUsComponent },
+      { path: 'polityka_prywatnosci', component: PrivacyPolicyComponent },
       { path: 'kontakt', component: ContactComponent },
       {
         path: 'ustawienia',
         component: SettingsComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'ustawienia/zmiana_nazwy_uzytkownika',
+        component: ChangeUsernameComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'ustawienia/zmiana_adresu_email',
+        component: ChangeEmailAddressComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'ustawienia/zmiana_hasla',
+        component: ChangePasswordComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'ustawienia/edycja_zdjecia_profilowego',
+        component: ChangeProfileLogoComponent,
         canActivate: [AuthGuard],
       },
     ],
@@ -32,7 +56,7 @@ const routes: Routes = [
   { path: 'dashboard', component: MainPageComponent, canActivate: [AuthGuard] },
   { path: 'logowanie', component: LoginComponent },
   { path: 'rejestracja', component: RegistrationComponent },
-  { path: 'zapomnialem-haslo', component: ForgotPasswordComponent },
+  { path: 'zapomnialem_haslo', component: ForgotPasswordComponent },
 ];
 
 @NgModule({

@@ -9,7 +9,7 @@ export class FooterComponent {
   constructor(private _router: Router) {}
 
   navigateToAboutUs() {
-    this._router.navigate(['/o-nas']);
+    this._router.navigate(['/o_nas']);
   }
 
   navigateToContact() {
@@ -17,6 +17,6 @@ export class FooterComponent {
   }
 
   navigateToPrivacyPolicy() {
-    this._router.navigate(['/polityka-prywatnosci']);
+    this._router.navigate(['/polityka_prywatnosci']);
   }
 }

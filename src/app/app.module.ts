@@ -22,6 +22,10 @@ import { environment } from '../environments/environment';
 import { HttpClientModule } from '@angular/common/http';
 import { LoadingBallComponent } from './shared/components/loading-ball/loading-ball.component';
 import { SettingsComponent } from './shared/components/settings/settings.component';
+import { ChangeEmailAddressComponent } from './shared/components/settings/change-email-address/change-email-address.component';
+import { ChangePasswordComponent } from './shared/components/settings/change-password/change-password.component';
+import { ChangeUsernameComponent } from './shared/components/settings/change-username/change-username.component';
+import { ChangeProfileLogoComponent } from './shared/components/settings/change-profile-logo/change-profile-logo.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +39,10 @@ import { SettingsComponent } from './shared/components/settings/settings.compone
     StartingPageComponent,
     LoadingBallComponent,
     SettingsComponent,
+    ChangeEmailAddressComponent,
+    ChangePasswordComponent,
+    ChangeUsernameComponent,
+    ChangeProfileLogoComponent,
   ],
   imports: [
     BrowserModule,
