@@ -26,24 +26,47 @@ export class ChangeEmailAddressComponent {
 
   async onSubmit() {
     if (this.newEmailForm.valid) {
-      this.loadingBall = true;
-      this.required = false;
-      try {
-        const beforeEmail = this.newEmailForm.value.beforeEmail;
-        await this._authService.changeEmail(beforeEmail, '');
-        // await this._resetPassword();
-      } catch (error) {
-        this.loadingBall = false;
-        this._formService.showError('Błąd', 'Wystąpił błąd');
+      if (this._emailsMatchCheck()) {
+        this.loadingBall = true;
+        this.required = false;
+        try {
+          const beforeEmail = this.newEmailForm.value.beforeEmail;
+          const newEmail = this.newEmailForm.value.newEmail;
+          await this._changeEmail(beforeEmail, newEmail);
+        } catch (error) {
+          this.loadingBall = false;
+          this._formService.showError('Błąd', 'Wystąpił błąd');
+        }
+        this._resetForm();
+      } else {
+        this.required = false;
+        return;
       }
-      this._resetForm();
     } else {
       this.required = true;
+      return;
     }
   }
 
   navigateToSettings() {
     this._router.navigate(['ustawienia']);
+  }
+
+  private async _changeEmail(beforeEmail: string, newEmail: string) {
+    this._authService.changeEmail(beforeEmail, newEmail);
+  }
+
+  private _emailsMatchCheck(): boolean {
+    if (
+      this.newEmailForm.value.newEmail !==
+      this.newEmailForm.value.newEmailRepeat
+    ) {
+      this._formService.showError('Błąd', 'Podane adresy e-mail różnią się');
+      this._resetForm();
+      return false;
+    } else {
+      return true;
+    }
   }
 
   private _resetForm() {

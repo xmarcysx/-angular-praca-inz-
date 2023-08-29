@@ -3,6 +3,8 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { LoginStorageService } from './login-storage.service';
+import { FirebaseService } from './firebase.service';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -12,11 +14,14 @@ export class AuthService {
     private _angularFireAuth: AngularFireAuth,
     private _router: Router,
     private _messageService: MessageService,
-    private _loginStorageService: LoginStorageService
+    private _loginStorageService: LoginStorageService,
+    private _firebaseService: FirebaseService
   ) {}
 
   isLoggedIn: boolean = false;
   email: string = '';
+
+  emailHasChanged: Subject<string> = new Subject();
 
   // rejestracja
   async signUp(email: string, password: string): Promise<void> {
@@ -101,9 +106,30 @@ export class AuthService {
 
   async changeEmail(beforeEmail: string, newEmail: string) {
     this._angularFireAuth.currentUser.then((user) => {
-      console.log(beforeEmail);
-
       if (beforeEmail === user?.email) {
+        user
+          .updateEmail(newEmail)
+          .then(() => {
+            this._messageService.add({
+              severity: 'success',
+              summary: 'Sukces',
+              detail: 'Adres e-mail został zmieniony',
+            });
+            const getLoginStorage = this._loginStorageService.getLoginStorage();
+            if (getLoginStorage) {
+              const loginLocalStorageData = JSON.parse(getLoginStorage);
+              const password = loginLocalStorageData.password;
+              this._loginStorageService.setLoginStorage(newEmail, password);
+            }
+            this._firebaseService.updateEmailInFirebase(beforeEmail, newEmail);
+
+            this.emailHasChanged.next(newEmail);
+
+            this._router.navigate(['/ustawienia']);
+          })
+          .catch((error) => {
+            this._handleAuthError(error);
+          });
       } else {
         this._messageService.add({
           severity: 'error',
@@ -112,23 +138,6 @@ export class AuthService {
         });
         return;
       }
-      console.log(user?.email);
-
-      // if (user) {
-      //   user
-      //     .updateEmail(newEmail)
-      //     .then(() => {
-      //       this._messageService.add({
-      //         severity: 'success',
-      //         summary: 'Sukces',
-      //         detail: 'Użytkownik został wylogowany',
-      //       });
-      //       this._router.navigate(['/ustawienia']);
-      //     })
-      //     .catch((error) => {
-      //       this._handleAuthError(error);
-      //     });
-      // }
     });
   }
 

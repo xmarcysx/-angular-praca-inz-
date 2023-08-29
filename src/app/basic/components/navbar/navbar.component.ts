@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { FirebaseService } from 'src/app/shared/services/firebase.service';
 import { ThemeStorageService } from 'src/app/shared/services/theme-storage.service';
@@ -10,6 +11,9 @@ import { ThemeStorageService } from 'src/app/shared/services/theme-storage.servi
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
+  private emailSubscription!: Subscription;
+  private usernameSubscription!: Subscription;
+
   isLoggedIn: boolean = false;
   root = window.document.documentElement;
   themeName: string = '';
@@ -31,6 +35,22 @@ export class NavbarComponent implements OnInit {
     this.email = this._authSerivce.email;
     this._getUserData(this.email);
 
+    this.usernameSubscription =
+      this._firebaseService.usernameHasChanged.subscribe(() => {
+        setTimeout(() => {
+          this._getUserData(this.email);
+        }, 1000);
+      });
+
+    this.emailSubscription = this._authSerivce.emailHasChanged.subscribe(
+      (newEmail) => {
+        this.email = newEmail;
+        setTimeout(() => {
+          this._getUserData(this.email);
+        }, 1000);
+      }
+    );
+
     this.themeName = this._themeStorageService.loadNavTheme();
   }
 
@@ -51,12 +71,23 @@ export class NavbarComponent implements OnInit {
   }
 
   logout() {
+    this.isLoggedIn = false;
     this._authSerivce.signOut();
   }
 
-  private _getUserData(email: string) {
+  private async _getUserData(email: string) {
     this._firebaseService.getUserDataByEmail(email).subscribe((data) => {
       this.userData = data;
     });
+  }
+
+  ngOnDestroy() {
+    if (this.emailSubscription) {
+      this.emailSubscription.unsubscribe();
+    }
+
+    if (this.usernameSubscription) {
+      this.usernameSubscription.unsubscribe();
+    }
   }
 }
