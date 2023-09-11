@@ -3,16 +3,23 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Subject, map, switchMap } from 'rxjs';
+import { MessageService } from 'primeng/api';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FirebaseService {
   usernameHasChanged: Subject<string> = new Subject();
+  imageHasChanged: Subject<string> = new Subject();
 
   img = 'src/assets/images/logo.png';
 
-  constructor(private _http: HttpClient) {}
+  constructor(
+    private _http: HttpClient,
+    private _router: Router,
+    private _messageService: MessageService
+  ) {}
 
   addUserToDatabase(username: string, email: string) {
     this._http
@@ -60,12 +67,59 @@ export class FirebaseService {
               )
               .subscribe(
                 () => {
-                  console.log('Email updated successfully');
+                  this._messageService.add({
+                    severity: 'success',
+                    summary: 'Sukces',
+                    detail: 'Adres e-mail został zmieniony',
+                  });
                 },
                 (error) => {
                   console.error('Error updating email:', error);
                 }
               );
+          } else {
+            console.error('User not found');
+          }
+        },
+        (error) => {
+          console.error('Error fetching data:', error);
+        }
+      );
+  }
+
+  async updateProfileLogo(email: string, newImage: string) {
+    this._http
+      .get(`${environment.firebaseConfig.databaseURL}/users.json`)
+      .subscribe(
+        (data: any) => {
+          const userIdToUpdate = Object.keys(data).find(
+            (userId) => data[userId].email === email
+          );
+
+          if (userIdToUpdate) {
+            const updates = {
+              [`/${userIdToUpdate}/img`]: newImage,
+            };
+
+            this._http
+              .patch(
+                `${environment.firebaseConfig.databaseURL}/users.json`,
+                updates
+              )
+              .subscribe(
+                () => {
+                  this._router.navigate(['/ustawienia']);
+                  this._messageService.add({
+                    severity: 'success',
+                    summary: 'Sukces',
+                    detail: 'Logo zostało zmienione',
+                  });
+                },
+                (error) => {
+                  console.error('Error updating profile logo:', error);
+                }
+              );
+            this.imageHasChanged.next(newImage);
           } else {
             console.error('User not found');
           }
@@ -97,7 +151,12 @@ export class FirebaseService {
               )
               .subscribe(
                 () => {
-                  console.log('Username updated successfully');
+                  this._router.navigate(['/ustawienia']);
+                  this._messageService.add({
+                    severity: 'success',
+                    summary: 'Sukces',
+                    detail: 'Nazwa użytkownika została zmieniona',
+                  });
                 },
                 (error) => {
                   console.error('Error updating username:', error);

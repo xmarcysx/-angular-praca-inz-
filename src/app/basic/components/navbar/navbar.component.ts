@@ -13,6 +13,7 @@ import { ThemeStorageService } from 'src/app/shared/services/theme-storage.servi
 export class NavbarComponent implements OnInit {
   private emailSubscription!: Subscription;
   private usernameSubscription!: Subscription;
+  private imageSubscription!: Subscription;
 
   isLoggedIn: boolean = false;
   root = window.document.documentElement;
@@ -41,6 +42,14 @@ export class NavbarComponent implements OnInit {
           this._getUserData(this.email);
         }, 1000);
       });
+
+    this.imageSubscription = this._firebaseService.imageHasChanged.subscribe(
+      () => {
+        setTimeout(() => {
+          this._getUserData(this.email);
+        }, 1000);
+      }
+    );
 
     this.emailSubscription = this._authSerivce.emailHasChanged.subscribe(
       (newEmail) => {
@@ -88,6 +97,10 @@ export class NavbarComponent implements OnInit {
 
     if (this.usernameSubscription) {
       this.usernameSubscription.unsubscribe();
+    }
+
+    if (this.imageSubscription) {
+      this.imageSubscription.unsubscribe();
     }
   }
 }

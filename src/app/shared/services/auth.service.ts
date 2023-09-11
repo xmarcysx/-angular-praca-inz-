@@ -50,7 +50,7 @@ export class AuthService {
         });
         this.isLoggedIn = true;
         this.email = email;
-        this._router.navigate(['ustawienia']);
+        this._router.navigate(['/dashboard']);
       })
       .catch((error) => {
         this._handleAuthError(error);
@@ -75,6 +75,35 @@ export class AuthService {
       .catch((error) => {
         this._handleAuthError(error);
       });
+  }
+
+  async changePassword(newPassword: string): Promise<void> {
+    try {
+      const user = await this._angularFireAuth.currentUser;
+      if (!user) {
+        this._messageService.add({
+          severity: 'error',
+          summary: 'Błąd',
+          detail: 'Użytkownik nie istnieje',
+        });
+        return;
+      }
+      await user.updatePassword(newPassword);
+
+      const email = user.email;
+      const getLoginStorage = this._loginStorageService.getLoginStorage();
+      if (email && getLoginStorage) {
+        this._loginStorageService.setLoginStorage(email, newPassword);
+      }
+      this._router.navigate(['/ustawienia']);
+      this._messageService.add({
+        severity: 'success',
+        summary: 'Sukces',
+        detail: 'Hasło zostało zmienione',
+      });
+    } catch (error) {
+      this._handleAuthError(error);
+    }
   }
 
   isAuthenticated(): boolean {
@@ -110,11 +139,6 @@ export class AuthService {
         user
           .updateEmail(newEmail)
           .then(() => {
-            this._messageService.add({
-              severity: 'success',
-              summary: 'Sukces',
-              detail: 'Adres e-mail został zmieniony',
-            });
             const getLoginStorage = this._loginStorageService.getLoginStorage();
             if (getLoginStorage) {
               const loginLocalStorageData = JSON.parse(getLoginStorage);

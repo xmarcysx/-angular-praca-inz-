@@ -30,7 +30,7 @@ export class ChangePasswordComponent {
       this.loadingBall = true;
       this.required = false;
       try {
-        // await this._resetPassword();
+        await this._resetPassword();
       } catch (error) {
         this.loadingBall = false;
         this._formService.showError('Błąd', 'Wystąpił błąd');
@@ -43,6 +43,17 @@ export class ChangePasswordComponent {
 
   navigateToSettings() {
     this._router.navigate(['ustawienia']);
+  }
+
+  private async _resetPassword() {
+    const passwordCheck = this._passwordsMatchCheck();
+    if (passwordCheck) {
+      const newPassword = this.newPasswordForm.value.newPassword;
+      const beforePassword = this.newPasswordForm.value.beforePassword;
+      await this._authService.changePassword(newPassword);
+    } else {
+      return;
+    }
   }
 
   private _passwordsMatchCheck(): boolean {
@@ -72,7 +83,6 @@ export class ChangePasswordComponent {
     ];
 
     this.newPasswordForm = new FormGroup({
-      beforePassword: new FormControl('', passwordValidators),
       newPassword: new FormControl('', passwordValidators),
       newPasswordRepeat: new FormControl('', passwordValidators),
     });
