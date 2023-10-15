@@ -15,6 +15,7 @@ export class NavbarComponent implements OnInit {
   private usernameSubscription!: Subscription;
   private imageSubscription!: Subscription;
 
+  isLoggedInAdmin: boolean = false;
   isLoggedIn: boolean = false;
   root = window.document.documentElement;
   themeName: string = '';
@@ -32,6 +33,7 @@ export class NavbarComponent implements OnInit {
   logo = '../../../../assets/images/userProfile.png';
 
   async ngOnInit() {
+    this.isLoggedInAdmin = this._authSerivce.isLoggedInAdmin;
     this.isLoggedIn = this._authSerivce.isLoggedIn;
     this.email = this._authSerivce.email;
     this._getUserData(this.email);
@@ -80,6 +82,7 @@ export class NavbarComponent implements OnInit {
   }
 
   logout() {
+    this.isLoggedInAdmin = false;
     this.isLoggedIn = false;
     this._authSerivce.signOut();
   }

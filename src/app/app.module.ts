@@ -26,11 +26,19 @@ import { ChangeEmailAddressComponent } from './shared/components/settings/change
 import { ChangePasswordComponent } from './shared/components/settings/change-password/change-password.component';
 import { ChangeUsernameComponent } from './shared/components/settings/change-username/change-username.component';
 import { ChangeProfileLogoComponent } from './shared/components/settings/change-profile-logo/change-profile-logo.component';
+import { CommonModule } from '@angular/common';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ManageUsersComponent } from './modules/components/admin/manage-users/manage-users.component';
+import { NewsComponent } from './modules/components/news/news.component';
+import { PaginatorModule } from 'primeng/paginator';
+import { DialogModule } from 'primeng/dialog';
+import { EditorModule } from '@tinymce/tinymce-angular';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
+    NewsComponent,
     FooterComponent,
     MainPageComponent,
     LoginComponent,
@@ -43,8 +51,13 @@ import { ChangeProfileLogoComponent } from './shared/components/settings/change-
     ChangePasswordComponent,
     ChangeUsernameComponent,
     ChangeProfileLogoComponent,
+    ManageUsersComponent,
   ],
   imports: [
+    EditorModule,
+    DialogModule,
+    PaginatorModule,
+    ConfirmDialogModule,
     BrowserModule,
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
@@ -54,6 +67,7 @@ import { ChangeProfileLogoComponent } from './shared/components/settings/change-
     ReactiveFormsModule,
     AppRoutingModule,
     ToastModule,
+    CommonModule,
   ],
   providers: [MessageService],
   bootstrap: [AppComponent],

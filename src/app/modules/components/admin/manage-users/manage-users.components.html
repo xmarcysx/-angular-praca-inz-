@@ -1,0 +1,60 @@
+<div class="flex justify-center items-center">
+  <div
+    class="min-w-full bg-gray-100 rounded-md bg-clip-padding bg-opacity-40 duration-500 text-gray-900 dark:bg-gray-800 dark:rounded-md dark:bg-clip-padding dark:bg-opacity-40 dark:text-gray-100"
+  >
+    <div class="w-1/2 px-6 sm:py-8 py-0 mx-auto lg:py-0">
+      <div class="flex justify-center py-3">
+        <h1 class="font-bold text-lg">Lista użytkowników</h1>
+      </div>
+      <ul
+        *ngFor="let user of this.users"
+        class="divide-y divide-gray-200 dark:divide-gray-700"
+      >
+        <li class="pb-3 sm:pb-4">
+          <div class="flex items-center space-x-4">
+            <div class="flex-shrink-0">
+              <img
+                class="w-8 h-8 rounded-full"
+                src="{{
+                user?.img !== ''
+                  ? user.img
+                  : '../../../../../assets/images/userProfile.png'
+              }}"
+                alt="LOGO"
+              />
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="text-sm font-bold text-black truncate dark:text-white">
+                {{user.username}}
+              </p>
+              <p class="text-sm text-black truncate dark:text-gray-400">
+                {{user.email}}
+              </p>
+            </div>
+            <div class="flex items-center lg:order-2">
+              <button
+                *ngIf="!user.disabled"
+                (click)="showBlockUnblockModal(user)"
+                type="button"
+                class="text-white bg-red-600 hover:bg-red-800 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0"
+              >
+                Zablokuj
+              </button>
+              <button
+                *ngIf="user.disabled"
+                (click)="showBlockUnblockModal(user)"
+                type="button"
+                class="text-white bg-green-600 hover:bg-green-800 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0"
+              >
+                Odblokuj
+              </button>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
+<p-toast></p-toast>

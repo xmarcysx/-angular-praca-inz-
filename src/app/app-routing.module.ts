@@ -15,6 +15,8 @@ import { ChangeUsernameComponent } from './shared/components/settings/change-use
 import { ChangeProfileLogoComponent } from './shared/components/settings/change-profile-logo/change-profile-logo.component';
 import { ChangePasswordComponent } from './shared/components/settings/change-password/change-password.component';
 import { ChangeEmailAddressComponent } from './shared/components/settings/change-email-address/change-email-address.component';
+import { ManageUsersComponent } from './modules/components/admin/manage-users/manage-users.component';
+import { NewsComponent } from './modules/components/news/news.component';
 
 const routes: Routes = [
   {
@@ -49,6 +51,15 @@ const routes: Routes = [
       {
         path: 'ustawienia/edycja_zdjecia_profilowego',
         component: ChangeProfileLogoComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'admin/uzytkownicy',
+        component: ManageUsersComponent,
+      },
+      {
+        path: 'wiadomosci',
+        component: NewsComponent,
         canActivate: [AuthGuard],
       },
     ],

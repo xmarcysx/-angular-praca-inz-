@@ -21,6 +21,7 @@
     "@angular/platform-browser": "^16.0.0",
     "@angular/platform-browser-dynamic": "^16.0.0",
     "@angular/router": "^16.0.0",
+    "@tinymce/tinymce-angular": "^7.0.0",
     "firebase": "^10.1.0",
     "flowbite": "^1.8.1",
     "primeicons": "^6.0.1",

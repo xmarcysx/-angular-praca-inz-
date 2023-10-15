@@ -105,3 +105,106 @@ app-change-email-address {
   margin-top: 40px;
   z-index: 100;
 }
+
+//PAGINATOR - Light
+.p-paginator {
+  background: transparent !important;
+  color: white !important;
+}
+
+.p-paginator .p-paginator-pages .p-paginator-page {
+  color: black !important;
+}
+
+.p-paginator .p-paginator-first,
+.p-paginator .p-paginator-prev,
+.p-paginator .p-paginator-next,
+.p-paginator .p-paginator-last {
+  color: black !important;
+}
+
+.p-dropdown {
+  background: white !important;
+  color: black !important;
+  border: 1px solid white !important;
+}
+
+.p-dropdown .p-dropdown-label {
+  color: black !important;
+}
+
+.p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
+  background: white !important;
+}
+
+//PAGINATOR - Dark
+.dark .p-paginator {
+  background: transparent !important;
+  color: black !important;
+}
+
+.dark .p-paginator .p-paginator-pages .p-paginator-page {
+  color: white !important;
+}
+
+.dark .p-paginator .p-paginator-first,
+.dark .p-paginator .p-paginator-prev,
+.dark .p-paginator .p-paginator-next,
+.dark .p-paginator .p-paginator-last {
+  color: white !important;
+}
+
+.dark .p-dropdown {
+  background: black !important;
+  color: white !important;
+  border: 1px solid black !important;
+}
+
+.dark .p-dropdown .p-dropdown-label {
+  color: white !important;
+}
+
+.dark .p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
+  background: black !important;
+}
+
+.dark
+  .p-paginator
+  .p-paginator-pages
+  .p-paginator-page:not(.p-highlight):hover {
+  background: rgb(61, 61, 61) !important;
+}
+
+.dark .p-paginator .p-paginator-first:not(.p-disabled):not(.p-highlight):hover,
+.dark .p-paginator .p-paginator-prev:not(.p-disabled):not(.p-highlight):hover,
+.dark .p-paginator .p-paginator-next:not(.p-disabled):not(.p-highlight):hover,
+.dark .p-paginator .p-paginator-last:not(.p-disabled):not(.p-highlight):hover {
+  background: rgb(61, 61, 61) !important;
+}
+
+app-news {
+  height: 100%;
+  overflow-y: auto;
+
+  & {
+    --sb-track-color: rgb(229, 231, 235);
+    --sb-thumb-color: rgb(28, 100, 242);
+    --sb-size: 10px;
+
+    scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
+  }
+
+  &::-webkit-scrollbar {
+    width: var(--sb-size);
+  }
+
+  &::-webkit-scrollbar-track {
+    background: var(--sb-track-color);
+    border-radius: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--sb-thumb-color);
+    border-radius: 5px;
+  }
+}

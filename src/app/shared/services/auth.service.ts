@@ -18,13 +18,14 @@ export class AuthService {
     private _firebaseService: FirebaseService
   ) {}
 
+  isLoggedInAdmin: boolean = false;
   isLoggedIn: boolean = false;
   email: string = '';
 
   emailHasChanged: Subject<string> = new Subject();
 
   // rejestracja
-  async signUp(email: string, password: string): Promise<void> {
+  async signUp(email: string, password: string): Promise<any> {
     try {
       const result = await this._angularFireAuth.createUserWithEmailAndPassword(
         email,
@@ -32,6 +33,7 @@ export class AuthService {
       );
       if (result.user) {
         this._router.navigate(['logowanie']);
+        return result.user.uid;
       }
     } catch (error) {
       this._handleAuthError(error);
@@ -48,6 +50,8 @@ export class AuthService {
           summary: 'Sukces',
           detail: 'Użytkownik został zalogowany',
         });
+        if (email === 'administrator@regionalnielive.firebaseapp.com')
+          this.isLoggedInAdmin = true;
         this.isLoggedIn = true;
         this.email = email;
         this._router.navigate(['/dashboard']);
@@ -125,6 +129,7 @@ export class AuthService {
           detail: 'Użytkownik został wylogowany',
         });
         this._router.navigate(['/']);
+        this.isLoggedInAdmin = false;
         this.isLoggedIn = false;
         this._loginStorageService.removeLoginStorage();
       })
