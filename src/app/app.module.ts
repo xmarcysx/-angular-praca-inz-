@@ -32,7 +32,8 @@ import { ManageUsersComponent } from './modules/components/admin/manage-users/ma
 import { NewsComponent } from './modules/components/news/news.component';
 import { PaginatorModule } from 'primeng/paginator';
 import { DialogModule } from 'primeng/dialog';
-import { EditorModule } from '@tinymce/tinymce-angular';
+// import { EditorModule } from '@tinymce/tinymce-angular';
+import { EditorModule } from 'primeng/editor';
 
 @NgModule({
   declarations: [

@@ -26,14 +26,18 @@
           <div class="flex bg-white mr-3 text-sm rounded-full">
             <img
               class="w-9 h-9 rounded-full"
-              src="../../../../assets/images/userProfile.png"
+              src="{{
+                message.user?.img !== ''
+                  ? message.user?.img
+                  : '../../../../assets/images/userProfile.png'
+              }}"
               alt="User Photo"
             />
           </div>
           <div>
             <div>
               <h1 class="text-lg">
-                {{ message.userEmail }} : {{ message.date }}
+                {{ message.user.username }} / {{ message.date }}
               </h1>
             </div>
             <div [innerHTML]="message.message"></div>
@@ -59,15 +63,27 @@
   [(visible)]="visible"
   [style]="{ width: '50vw' }"
 >
-  <editor
-    apiKey="8jgwo9678zl2jr9j0ale6gh45oxhopmi79uznxyemo37wolk"
-    [init]="{ menubar: false }"
-    initialValue=""
-    [(ngModel)]="message"
-  ></editor>
+  <div class="card">
+    <p-editor
+      [(ngModel)]="message"
+      [style]="{ height: '320px' }"
+      ngDefaultControl
+    >
+      <ng-template pTemplate="header">
+        <span class="ql-formats">
+          <button type="button" class="ql-bold" aria-label="Bold"></button>
+          <button type="button" class="ql-italic" aria-label="Italic"></button>
+          <button
+            type="button"
+            class="ql-underline"
+            aria-label="Underline"
+          ></button>
+        </span> </ng-template
+    ></p-editor>
+  </div>
   <div class="flex justify-center items-center gap-3 mt-3">
     <button
-      (click)="this.visible = false"
+      (click)="this.visible = false; this.message = ''"
       class="w-1/4 text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
     >
       Anuluj

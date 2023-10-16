@@ -208,3 +208,34 @@ app-news {
     border-radius: 5px;
   }
 }
+
+//P-dialog
+.dark .p-dialog .p-dialog-content {
+  background: #000;
+}
+
+.dark .p-dialog .p-dialog-header {
+  background: #000;
+}
+
+.dark .p-dialog .p-dialog-header .p-dialog-title {
+  color: #fff;
+}
+
+.dark .p-editor-container .p-editor-content .ql-editor {
+  background: black;
+  color: white;
+}
+
+.dark .p-editor-container .p-editor-toolbar {
+  background: black;
+}
+
+.dark
+  .p-editor-container
+  .p-editor-toolbar.ql-snow
+  .ql-picker.ql-expanded
+  .ql-picker-options {
+  background: black;
+  color: white;
+}

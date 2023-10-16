@@ -235,8 +235,9 @@ export class FirebaseService {
     const year = currentDate.getFullYear();
     const hours = currentDate.getHours();
     const minutes = currentDate.getMinutes();
+    const formattedMinutes = minutes.toString().padStart(2, '0'); // Dodaj wiodący zerowy znak
 
-    const formattedDate = `${day}.${month}.${year} : ${hours}:${minutes}`;
+    const formattedDate = `${day}.${month}.${year} - ${hours}:${formattedMinutes}`;
     this._http
       .post(`${environment.firebaseConfig.databaseURL}/messages.json`, {
         userEmail: userEmail,
