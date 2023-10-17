@@ -182,7 +182,15 @@ app-change-email-address {
   background: rgb(61, 61, 61) !important;
 }
 
-app-news {
+app-dashboard {
+  height: 100%;
+  display: flex;
+  gap: 0.5rem;
+}
+
+app-news,
+app-dashboard,
+app-dashboard-news {
   height: 100%;
   overflow-y: auto;
 
@@ -238,4 +246,14 @@ app-news {
   .ql-picker-options {
   background: black;
   color: white;
+}
+
+.message {
+  width: 40vw;
+  word-wrap: break-word;
+}
+
+.dashboard-message {
+  width: 15vw;
+  word-wrap: break-word;
 }

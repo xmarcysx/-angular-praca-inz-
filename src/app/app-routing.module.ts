@@ -17,6 +17,7 @@ import { ChangePasswordComponent } from './shared/components/settings/change-pas
 import { ChangeEmailAddressComponent } from './shared/components/settings/change-email-address/change-email-address.component';
 import { ManageUsersComponent } from './modules/components/admin/manage-users/manage-users.component';
 import { NewsComponent } from './modules/components/news/news.component';
+import { Dashboard } from './modules/components/dashboard/dashboard.component';
 
 const routes: Routes = [
   {
@@ -60,6 +61,11 @@ const routes: Routes = [
       {
         path: 'wiadomosci',
         component: NewsComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'dashboard',
+        component: Dashboard,
         canActivate: [AuthGuard],
       },
     ],

@@ -34,6 +34,8 @@ import { PaginatorModule } from 'primeng/paginator';
 import { DialogModule } from 'primeng/dialog';
 // import { EditorModule } from '@tinymce/tinymce-angular';
 import { EditorModule } from 'primeng/editor';
+import { DashboardNews } from './modules/components/dashboard/news/dashboard-news.component';
+import { Dashboard } from './modules/components/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +55,8 @@ import { EditorModule } from 'primeng/editor';
     ChangeUsernameComponent,
     ChangeProfileLogoComponent,
     ManageUsersComponent,
+    DashboardNews,
+    Dashboard,
   ],
   imports: [
     EditorModule,
