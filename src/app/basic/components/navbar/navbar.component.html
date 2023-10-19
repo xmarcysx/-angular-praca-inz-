@@ -155,12 +155,28 @@
         class="flex flex-col gap-4 lg:gap-0 lg:items-center font-medium p-4 lg:p-0 mt-4 rounded-lg lg:flex-row lg:space-x-8 lg:mt-0"
       >
         <li
+          routerLink="/dashboard"
+          routerLinkActive="active"
+          class="flex px-4 py-2 lg:py-1 text-black rounded cursor-pointer hover:bg-white dark:text-white dark:hover:text-black"
+        >
+          <mat-icon>dashboard</mat-icon>
+          <a class="px-2" aria-current="page">Dashboard</a>
+        </li>
+        <li
           routerLink="/admin/uzytkownicy"
           routerLinkActive="active"
           class="flex px-4 py-2 lg:py-1 text-black rounded cursor-pointer hover:bg-white dark:text-white dark:hover:text-black"
         >
-          <mat-icon>users</mat-icon>
+          <mat-icon>person</mat-icon>
           <a class="px-2" aria-current="page">Zarządzaj użytkownikami</a>
+        </li>
+        <li
+          routerLink="/wiadomosci"
+          routerLinkActive="active"
+          class="flex px-4 py-2 lg:py-1 text-black rounded cursor-pointer hover:bg-white dark:text-white dark:hover:text-black"
+        >
+          <mat-icon>article</mat-icon>
+          <a class="px-2" aria-current="page">Wiadomości</a>
         </li>
       </ul>
     </div>

@@ -184,13 +184,16 @@ app-change-email-address {
 
 app-dashboard {
   height: 100%;
+  overflow-y: auto;
   display: flex;
   gap: 0.5rem;
 }
 
 app-news,
+app-manage-users,
 app-dashboard,
-app-dashboard-news {
+app-dashboard-news,
+app-dashboard-admin-users {
   height: 100%;
   overflow-y: auto;
 
@@ -218,6 +221,14 @@ app-dashboard-news {
 }
 
 //P-dialog
+.dark .p-dialog .p-dialog-footer {
+  background: #000;
+}
+
+.dark .p-dialog .p-dialog-content {
+  color: #fff;
+}
+
 .dark .p-dialog .p-dialog-content {
   background: #000;
 }

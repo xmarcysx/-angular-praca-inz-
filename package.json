@@ -24,6 +24,8 @@
     "@tinymce/tinymce-angular": "^7.0.0",
     "@types/tinymce": "^4.6.6",
     "firebase": "^10.1.0",
+    "firebase-admin": "^11.11.0",
+    "firebase-functions": "^4.4.1",
     "flowbite": "^1.8.1",
     "ngx-editor": "^16.0.1",
     "primeicons": "^6.0.1",

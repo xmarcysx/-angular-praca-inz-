@@ -4,12 +4,19 @@ import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { LoginStorageService } from './login-storage.service';
 import { FirebaseService } from './firebase.service';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  public adminUid = 'Aqp48LBhNmfoQddxYO8fyfLWawx2';
+  isLoggedInAdmin: boolean = false;
+  isLoggedIn: boolean = false;
+  email: string = '';
+
+  emailHasChanged: Subject<string> = new Subject();
+
   constructor(
     private _angularFireAuth: AngularFireAuth,
     private _router: Router,
@@ -17,12 +24,6 @@ export class AuthService {
     private _loginStorageService: LoginStorageService,
     private _firebaseService: FirebaseService
   ) {}
-
-  isLoggedInAdmin: boolean = false;
-  isLoggedIn: boolean = false;
-  email: string = '';
-
-  emailHasChanged: Subject<string> = new Subject();
 
   // rejestracja
   async signUp(email: string, password: string): Promise<any> {

@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class FirebaseService {
+  public adminUid = 'Aqp48LBhNmfoQddxYO8fyfLWawx2';
   usernameHasChanged: Subject<string> = new Subject();
   imageHasChanged: Subject<string> = new Subject();
 
@@ -57,6 +58,24 @@ export class FirebaseService {
           if (usersArray) {
             const filteredUsers = usersArray.filter(
               (user) => user.username !== 'Administrator'
+            );
+            return filteredUsers;
+          } else {
+            return [];
+          }
+        })
+      );
+  }
+
+  getAllUsersAdmin() {
+    return this._http
+      .get(`${environment.firebaseConfig.databaseURL}/users.json`)
+      .pipe(
+        map((users) => {
+          const usersArray = Object.values(users);
+          if (usersArray) {
+            const filteredUsers = usersArray.filter(
+              (user) => user.uid !== this.adminUid
             );
             return filteredUsers;
           } else {

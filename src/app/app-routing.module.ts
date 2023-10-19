@@ -7,6 +7,7 @@ import { ForgotPasswordComponent } from './shared/components/forgot-password/for
 import { StartingPageComponent } from './shared/components/starting-page/starting-page.component';
 import { TermsComponent } from './shared/components/terms/terms.component';
 import { AuthGuard } from './shared/services/auth-guard';
+import { AdminGuard } from './shared/services/admin-guard';
 import { AboutUsComponent } from './shared/components/about-us/about-us.component';
 import { PrivacyPolicyComponent } from './shared/components/privacy-policy/privacy-policy.component';
 import { ContactComponent } from './shared/components/contact/contact.component';
@@ -57,6 +58,7 @@ const routes: Routes = [
       {
         path: 'admin/uzytkownicy',
         component: ManageUsersComponent,
+        canActivate: [AuthGuard, AdminGuard],
       },
       {
         path: 'wiadomosci',

@@ -36,6 +36,8 @@ import { DialogModule } from 'primeng/dialog';
 import { EditorModule } from 'primeng/editor';
 import { DashboardNews } from './modules/components/dashboard/news/dashboard-news.component';
 import { Dashboard } from './modules/components/dashboard/dashboard.component';
+import { WeatherComponent } from './modules/components/dashboard/weather/weather.component';
+import { DashboardAdminUsers } from './modules/components/dashboard/admin-users/dashboard-admin-users.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +59,8 @@ import { Dashboard } from './modules/components/dashboard/dashboard.component';
     ManageUsersComponent,
     DashboardNews,
     Dashboard,
+    WeatherComponent,
+    DashboardAdminUsers,
   ],
   imports: [
     EditorModule,
