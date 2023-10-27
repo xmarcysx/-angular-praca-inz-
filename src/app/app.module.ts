@@ -32,12 +32,12 @@ import { ManageUsersComponent } from './modules/components/admin/manage-users/ma
 import { NewsComponent } from './modules/components/news/news.component';
 import { PaginatorModule } from 'primeng/paginator';
 import { DialogModule } from 'primeng/dialog';
-// import { EditorModule } from '@tinymce/tinymce-angular';
 import { EditorModule } from 'primeng/editor';
 import { DashboardNews } from './modules/components/dashboard/news/dashboard-news.component';
 import { Dashboard } from './modules/components/dashboard/dashboard.component';
-import { WeatherComponent } from './modules/components/dashboard/weather/weather.component';
 import { DashboardAdminUsers } from './modules/components/dashboard/admin-users/dashboard-admin-users.component';
+import { CompetitionComponent } from './modules/components/competition/competition.component';
+import { DashboardCompetitionComponent } from './modules/components/dashboard/competition/dashboard-competition.component';
 
 @NgModule({
   declarations: [
@@ -59,8 +59,9 @@ import { DashboardAdminUsers } from './modules/components/dashboard/admin-users/
     ManageUsersComponent,
     DashboardNews,
     Dashboard,
-    WeatherComponent,
     DashboardAdminUsers,
+    DashboardCompetitionComponent,
+    CompetitionComponent,
   ],
   imports: [
     EditorModule,

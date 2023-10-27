@@ -19,6 +19,7 @@ import { ChangeEmailAddressComponent } from './shared/components/settings/change
 import { ManageUsersComponent } from './modules/components/admin/manage-users/manage-users.component';
 import { NewsComponent } from './modules/components/news/news.component';
 import { Dashboard } from './modules/components/dashboard/dashboard.component';
+import { CompetitionComponent } from './modules/components/competition/competition.component';
 
 const routes: Routes = [
   {
@@ -61,13 +62,18 @@ const routes: Routes = [
         canActivate: [AuthGuard, AdminGuard],
       },
       {
-        path: 'wiadomosci',
+        path: 'forum',
         component: NewsComponent,
         canActivate: [AuthGuard],
       },
       {
         path: 'dashboard',
         component: Dashboard,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'rozgrywki',
+        component: CompetitionComponent,
         canActivate: [AuthGuard],
       },
     ],

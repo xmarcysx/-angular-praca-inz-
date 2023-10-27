@@ -1,9 +1,12 @@
 <div class="w-1/4">
-  <app-dashboard-admin-users *ngIf="ifAdmin"></app-dashboard-admin-users>
+  <ng-container *ngIf="ifAdmin; else competition">
+    <app-dashboard-admin-users></app-dashboard-admin-users>
+  </ng-container>
+  <ng-template #competition>
+    <app-dashboard-competition></app-dashboard-competition>
+  </ng-template>
 </div>
-<div class="w-2/4">
-  <app-weather></app-weather>
-</div>
+<div class="w-2/4"></div>
 <div class="w-1/4">
   <app-dashboard-news></app-dashboard-news>
 </div>

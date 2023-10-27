@@ -67,6 +67,21 @@ export class FirebaseService {
       );
   }
 
+  getAllTeamsForCompetition() {
+    return this._http
+      .get(`${environment.firebaseConfig.databaseURL}/teams.json`)
+      .pipe(
+        map((team) => {
+          const teamsArray = Object.values(team);
+          if (teamsArray) {
+            return teamsArray;
+          } else {
+            return [];
+          }
+        })
+      );
+  }
+
   getAllUsersAdmin() {
     return this._http
       .get(`${environment.firebaseConfig.databaseURL}/users.json`)
@@ -258,7 +273,7 @@ export class FirebaseService {
 
     const formattedDate = `${day}.${month}.${year} - ${hours}:${formattedMinutes}`;
     this._http
-      .post(`${environment.firebaseConfig.databaseURL}/messages.json`, {
+      .post(`${environment.firebaseConfig.databaseURL}/teams.json`, {
         userEmail: userEmail,
         message: message,
         date: formattedDate,
