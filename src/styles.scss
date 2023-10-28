@@ -196,7 +196,8 @@ app-dashboard,
 app-dashboard-news,
 app-dashboard-admin-users {
   height: 100%;
-  overflow-y: auto;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
 
   & {
     --sb-track-color: rgb(229, 231, 235);

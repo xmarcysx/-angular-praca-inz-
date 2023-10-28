@@ -1,5 +1,11 @@
 import { ListKeyManager } from '@angular/cdk/a11y';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  OnInit,
+} from '@angular/core';
+import { log } from 'firebase-functions/logger';
 import { MessageService } from 'primeng/api';
 import { forkJoin, map } from 'rxjs';
 import { AuthService } from 'src/app/shared/services/auth.service';
@@ -21,6 +27,7 @@ export class NewsComponent implements OnInit {
   totalRecords!: number;
 
   constructor(
+    private el: ElementRef,
     private _authService: AuthService,
     private _firebaseService: FirebaseService,
     private _messageService: MessageService,
@@ -75,9 +82,9 @@ export class NewsComponent implements OnInit {
 
   onPageChange(event: any) {
     this.totalRecords = this.messages.length;
-    this.results = this.messages
-      .reverse()
-      .slice(event.first, event.first + event.rows);
+    this.results = this.messages.slice(event.first, event.first + event.rows);
     this.cdRef.detectChanges();
+
+    document.querySelector('#scroll-top')?.scrollIntoView();
   }
 }

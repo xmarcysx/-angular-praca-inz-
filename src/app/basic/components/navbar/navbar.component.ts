@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/shared/services/auth.service';
@@ -24,6 +24,7 @@ export class NavbarComponent implements OnInit {
   userData: any;
 
   constructor(
+    private el: ElementRef,
     private _themeStorageService: ThemeStorageService,
     private _router: Router,
     private _authSerivce: AuthService,
@@ -33,6 +34,8 @@ export class NavbarComponent implements OnInit {
   logo = '../../../../assets/images/userProfile.png';
 
   async ngOnInit() {
+    document.addEventListener('click', this.handleClickOutside.bind(this));
+
     this.isLoggedInAdmin = this._authSerivce.isLoggedInAdmin;
     this.isLoggedIn = this._authSerivce.isLoggedIn;
     this.email = this._authSerivce.email;
@@ -63,6 +66,12 @@ export class NavbarComponent implements OnInit {
     );
 
     this.themeName = this._themeStorageService.loadNavTheme();
+  }
+
+  handleClickOutside(event: Event) {
+    if (!this.el.nativeElement.contains(event.target)) {
+      this.isHidden = true;
+    }
   }
 
   openSettings() {

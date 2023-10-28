@@ -42,27 +42,27 @@ export class AuthService {
   }
 
   // logowanie
-  async signIn(email: string, password: string): Promise<void> {
-    this._angularFireAuth
-      .signInWithEmailAndPassword(email, password)
-      .then(() => {
-        this._messageService.add({
-          severity: 'success',
-          summary: 'Sukces',
-          detail: 'Użytkownik został zalogowany',
-        });
-        if (email === 'administrator@regionalnielive.firebaseapp.com')
-          this.isLoggedInAdmin = true;
-        this.isLoggedIn = true;
-        this.email = email;
-        this._router.navigate(['/dashboard']);
-      })
-      .catch((error) => {
-        this._handleAuthError(error);
-        this._router
-          .navigateByUrl('/', { skipLocationChange: true })
-          .then(() => this._router.navigate(['/logowanie']));
+  async signIn(email: string, password: string): Promise<boolean> {
+    try {
+      await this._angularFireAuth.signInWithEmailAndPassword(email, password);
+      this._messageService.add({
+        severity: 'success',
+        summary: 'Sukces',
+        detail: 'Użytkownik został zalogowany',
       });
+      if (email === 'administrator@regionalnielive.firebaseapp.com')
+        this.isLoggedInAdmin = true;
+      this.isLoggedIn = true;
+      this.email = email;
+      this._router.navigate(['/dashboard']);
+      return true;
+    } catch (error) {
+      this._handleAuthError(error);
+      this._router
+        .navigateByUrl('/', { skipLocationChange: true })
+        .then(() => this._router.navigate(['/logowanie']));
+      return false;
+    }
   }
 
   //resetowanie hasła
@@ -192,7 +192,13 @@ export class AuthService {
       case 'auth/user-disabled':
         this._showErrorMessage('Podany użytkownik jest zablokowany');
         break;
+      case 'auth/too-many-requests':
+        this._showErrorMessage(
+          'Dostęp do tego konta został tymczasowo wyłączony z powodu wielu nieudanych prób logowania'
+        );
+        break;
       default:
+        this._showErrorMessage('Nieznany błąd');
         break;
     }
   }

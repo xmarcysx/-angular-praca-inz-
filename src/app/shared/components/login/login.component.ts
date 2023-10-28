@@ -84,10 +84,11 @@ export class LoginComponent implements OnInit {
     const password = this.loginForm.value.password;
     const rememberMe = this.loginForm.get('rememberMe')?.value;
 
-    this._authService.signIn(email, password);
-    if (rememberMe) {
-      this._loginStorageService.setLoginStorage(email, password);
-    }
+    this._authService.signIn(email, password).then((success) => {
+      if (success && rememberMe) {
+        this._loginStorageService.setLoginStorage(email, password);
+      }
+    });
   }
 
   private async checkLocalStorage() {

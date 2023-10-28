@@ -1,4 +1,4 @@
-<div class="flex flex-grow min-h-full">
+<div class="flex flex-grow min-h-full" id="scroll-top">
   <div
     class="flex justify-center min-w-full bg-gray-100 rounded-md bg-clip-padding bg-opacity-40 duration-500 text-gray-900 dark:bg-gray-800 dark:rounded-md dark:bg-clip-padding dark:bg-opacity-40 dark:text-gray-100"
   >
@@ -19,7 +19,7 @@
         <p class="font-bold text-xl text-red-600">Brak wiadomości</p>
       </div>
 
-      <ng-container *ngFor="let message of results">
+      <ng-container *ngFor="let message of results.reverse()">
         <div class="bg-white dark:bg-black rounded-lg flex p-3 my-3">
           <div class="h-100 mt-1 items-start mr-3 text-sm rounded-full">
             <img

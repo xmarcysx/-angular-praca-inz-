@@ -41,6 +41,8 @@ export class ManageUsersComponent {
     this.totalRecords = this.users.length;
     this.results = this.users.slice(event.first, event.first + event.rows);
     this.cdRef.detectChanges();
+
+    document.querySelector('#scroll-top')?.scrollIntoView();
   }
 
   showBlockUnblockModal(user: any) {
