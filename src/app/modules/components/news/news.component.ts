@@ -75,6 +75,8 @@ export class NewsComponent implements OnInit {
         };
       });
 
+      this.messages.reverse();
+
       this.totalRecords = this.messages.length;
       this.onPageChange({ first: 0, rows: 10 });
     });

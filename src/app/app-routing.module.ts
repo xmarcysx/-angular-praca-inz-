@@ -20,6 +20,7 @@ import { ManageUsersComponent } from './modules/components/admin/manage-users/ma
 import { NewsComponent } from './modules/components/news/news.component';
 import { Dashboard } from './modules/components/dashboard/dashboard.component';
 import { CompetitionComponent } from './modules/components/competition/competition.component';
+import { ResultsComponent } from './modules/components/results/results.component';
 
 const routes: Routes = [
   {
@@ -74,6 +75,11 @@ const routes: Routes = [
       {
         path: 'rozgrywki',
         component: CompetitionComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'wyniki',
+        component: ResultsComponent,
         canActivate: [AuthGuard],
       },
     ],

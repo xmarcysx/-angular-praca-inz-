@@ -38,6 +38,7 @@ import { Dashboard } from './modules/components/dashboard/dashboard.component';
 import { DashboardAdminUsers } from './modules/components/dashboard/admin-users/dashboard-admin-users.component';
 import { CompetitionComponent } from './modules/components/competition/competition.component';
 import { DashboardCompetitionComponent } from './modules/components/dashboard/competition/dashboard-competition.component';
+import { ResultsComponent } from './modules/components/results/results.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import { DashboardCompetitionComponent } from './modules/components/dashboard/co
     DashboardAdminUsers,
     DashboardCompetitionComponent,
     CompetitionComponent,
+    ResultsComponent,
   ],
   imports: [
     EditorModule,

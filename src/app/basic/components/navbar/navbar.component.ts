@@ -88,6 +88,7 @@ export class NavbarComponent implements OnInit {
 
   navigateToSettings() {
     this._router.navigate(['ustawienia']);
+    this.isHidden = true;
   }
 
   logout() {

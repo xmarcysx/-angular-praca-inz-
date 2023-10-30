@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { Observable, Subject, map, switchMap } from 'rxjs';
+import { Observable, Subject, forkJoin, map, tap } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
+import { log } from 'firebase-functions/logger';
 
 @Injectable({
   providedIn: 'root',
@@ -273,7 +273,7 @@ export class FirebaseService {
 
     const formattedDate = `${day}.${month}.${year} - ${hours}:${formattedMinutes}`;
     this._http
-      .post(`${environment.firebaseConfig.databaseURL}/teams.json`, {
+      .post(`${environment.firebaseConfig.databaseURL}/messages.json`, {
         userEmail: userEmail,
         message: message,
         date: formattedDate,
@@ -284,6 +284,28 @@ export class FirebaseService {
   getAllMessages(): Observable<any> {
     return this._http.get(
       `${environment.firebaseConfig.databaseURL}/messages.json`
+    );
+  }
+
+  getAllLeagueRounds(): Observable<any> {
+    const rounds$ = this._http
+      .get(`${environment.firebaseConfig.databaseURL}/matches.json`)
+      .pipe(map((response) => Object.values(response)));
+
+    const teams$ = this._http
+      .get(`${environment.firebaseConfig.databaseURL}/teams.json`)
+      .pipe(map((response) => Object.values(response)));
+
+    return forkJoin([rounds$, teams$]).pipe(
+      map(([rounds, teams]) => {
+        return rounds.map((matches) => {
+          return matches.map((match: { homeTeamId: any; awayTeamId: any }) => {
+            const homeTeam = teams.find((team) => team.id === match.homeTeamId);
+            const awayTeam = teams.find((team) => team.id === match.awayTeamId);
+            return { ...match, homeTeam, awayTeam };
+          });
+        });
+      })
     );
   }
 }

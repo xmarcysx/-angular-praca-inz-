@@ -191,6 +191,7 @@ app-dashboard {
 
 app-news,
 app-competition,
+app-results,
 app-manage-users,
 app-dashboard,
 app-dashboard-news,
@@ -269,4 +270,8 @@ app-dashboard-admin-users {
 .dashboard-message {
   width: 15vw;
   word-wrap: break-word;
+}
+
+app-results > div > div > div > div:nth-child(2) > p-dropdown > .p-dropdown {
+  width: 250px;
 }

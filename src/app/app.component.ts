@@ -17,7 +17,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     initFlowbite();
     this.themeStorageService.loadTheme();
-
+    // - TEAMS
     // this._http
     //   .put(`${environment.firebaseConfig.databaseURL}/teams.json`, [
     //     {
@@ -80,6 +80,498 @@ export class AppComponent implements OnInit {
     //       img: 'https://i.imgur.com/x68blq6.png',
     //       points: 0,
     //     },
+    //   ])
+    //   .subscribe();
+
+    // MATCHES
+    // this._http
+    //   .put(`${environment.firebaseConfig.databaseURL}/matches.json`, [
+    //     [
+    //       {
+    //         homeTeamId: 0,
+    //         awayTeamId: 9,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 1,
+    //         awayTeamId: 8,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 2,
+    //         awayTeamId: 7,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 3,
+    //         awayTeamId: 6,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 4,
+    //         awayTeamId: 5,
+    //         date: '01.01.2024',
+    //       },
+    //     ],
+    //     [
+    //       {
+    //         homeTeamId: 5,
+    //         awayTeamId: 9,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 6,
+    //         awayTeamId: 4,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 7,
+    //         awayTeamId: 3,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 8,
+    //         awayTeamId: 2,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 0,
+    //         awayTeamId: 1,
+    //         date: '01.01.2024',
+    //       },
+    //     ],
+    //     [
+    //       {
+    //         homeTeamId: 1,
+    //         awayTeamId: 9,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 2,
+    //         awayTeamId: 0,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 3,
+    //         awayTeamId: 8,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 4,
+    //         awayTeamId: 7,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 5,
+    //         awayTeamId: 6,
+    //         date: '01.01.2024',
+    //       },
+    //     ],
+    //     [
+    //       {
+    //         homeTeamId: 6,
+    //         awayTeamId: 9,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 7,
+    //         awayTeamId: 5,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 8,
+    //         awayTeamId: 4,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 0,
+    //         awayTeamId: 3,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 1,
+    //         awayTeamId: 2,
+    //         date: '01.01.2024',
+    //       },
+    //     ],
+    //     [
+    //       {
+    //         homeTeamId: 2,
+    //         awayTeamId: 9,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 3,
+    //         awayTeamId: 1,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 4,
+    //         awayTeamId: 0,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 5,
+    //         awayTeamId: 8,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 6,
+    //         awayTeamId: 7,
+    //         date: '01.01.2024',
+    //       },
+    //     ],
+    //     [
+    //       {
+    //         homeTeamId: 7,
+    //         awayTeamId: 9,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 8,
+    //         awayTeamId: 6,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 0,
+    //         awayTeamId: 5,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 1,
+    //         awayTeamId: 4,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 2,
+    //         awayTeamId: 3,
+    //         date: '01.01.2024',
+    //       },
+    //     ],
+    //     [
+    //       {
+    //         homeTeamId: 3,
+    //         awayTeamId: 9,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 4,
+    //         awayTeamId: 2,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 5,
+    //         awayTeamId: 1,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 6,
+    //         awayTeamId: 0,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 7,
+    //         awayTeamId: 8,
+    //         date: '01.01.2024',
+    //       },
+    //     ],
+    //     [
+    //       {
+    //         homeTeamId: 8,
+    //         awayTeamId: 9,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 0,
+    //         awayTeamId: 7,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 1,
+    //         awayTeamId: 6,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 2,
+    //         awayTeamId: 5,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 3,
+    //         awayTeamId: 4,
+    //         date: '01.01.2024',
+    //       },
+    //     ],
+    //     [
+    //       {
+    //         homeTeamId: 4,
+    //         awayTeamId: 9,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 5,
+    //         awayTeamId: 3,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 6,
+    //         awayTeamId: 2,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 7,
+    //         awayTeamId: 1,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 8,
+    //         awayTeamId: 0,
+    //         date: '01.01.2024',
+    //       },
+    //     ],
+    //     [
+    //       {
+    //         homeTeamId: 9,
+    //         awayTeamId: 0,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 8,
+    //         awayTeamId: 1,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 7,
+    //         awayTeamId: 2,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 6,
+    //         awayTeamId: 3,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 5,
+    //         awayTeamId: 4,
+    //         date: '01.01.2024',
+    //       },
+    //     ],
+    //     [
+    //       {
+    //         homeTeamId: 9,
+    //         awayTeamId: 5,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 4,
+    //         awayTeamId: 6,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 3,
+    //         awayTeamId: 7,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 2,
+    //         awayTeamId: 8,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 1,
+    //         awayTeamId: 0,
+    //         date: '01.01.2024',
+    //       },
+    //     ],
+    //     [
+    //       {
+    //         homeTeamId: 9,
+    //         awayTeamId: 1,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 0,
+    //         awayTeamId: 2,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 8,
+    //         awayTeamId: 3,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 7,
+    //         awayTeamId: 4,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 6,
+    //         awayTeamId: 5,
+    //         date: '01.01.2024',
+    //       },
+    //     ],
+    //     [
+    //       {
+    //         homeTeamId: 9,
+    //         awayTeamId: 6,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 5,
+    //         awayTeamId: 7,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 4,
+    //         awayTeamId: 8,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 3,
+    //         awayTeamId: 0,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 2,
+    //         awayTeamId: 1,
+    //         date: '01.01.2024',
+    //       },
+    //     ],
+    //     [
+    //       {
+    //         homeTeamId: 9,
+    //         awayTeamId: 2,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 1,
+    //         awayTeamId: 3,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 0,
+    //         awayTeamId: 4,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 8,
+    //         awayTeamId: 5,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 7,
+    //         awayTeamId: 6,
+    //         date: '01.01.2024',
+    //       },
+    //     ],
+    //     [
+    //       {
+    //         homeTeamId: 9,
+    //         awayTeamId: 7,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 6,
+    //         awayTeamId: 8,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 5,
+    //         awayTeamId: 0,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 4,
+    //         awayTeamId: 1,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 3,
+    //         awayTeamId: 2,
+    //         date: '01.01.2024',
+    //       },
+    //     ],
+    //     [
+    //       {
+    //         homeTeamId: 9,
+    //         awayTeamId: 3,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 2,
+    //         awayTeamId: 4,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 1,
+    //         awayTeamId: 5,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 0,
+    //         awayTeamId: 6,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 8,
+    //         awayTeamId: 7,
+    //         date: '01.01.2024',
+    //       },
+    //     ],
+    //     [
+    //       {
+    //         homeTeamId: 9,
+    //         awayTeamId: 8,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 7,
+    //         awayTeamId: 0,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 6,
+    //         awayTeamId: 1,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 5,
+    //         awayTeamId: 2,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 4,
+    //         awayTeamId: 3,
+    //         date: '01.01.2024',
+    //       },
+    //     ],
+    //     [
+    //       {
+    //         homeTeamId: 9,
+    //         awayTeamId: 4,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 3,
+    //         awayTeamId: 5,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 2,
+    //         awayTeamId: 6,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 1,
+    //         awayTeamId: 7,
+    //         date: '01.01.2024',
+    //       },
+    //       {
+    //         homeTeamId: 0,
+    //         awayTeamId: 8,
+    //         date: '01.01.2024',
+    //       },
+    //     ],
     //   ])
     //   .subscribe();
   }
