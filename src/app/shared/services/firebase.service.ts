@@ -1,7 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { Observable, Subject, forkJoin, map, tap } from 'rxjs';
+import {
+  Observable,
+  Subject,
+  forkJoin,
+  map,
+  mergeMap,
+  tap,
+  toArray,
+} from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { log } from 'firebase-functions/logger';
@@ -306,6 +314,47 @@ export class FirebaseService {
           });
         });
       })
+    );
+  }
+
+  getAllTodaysMatches(): Observable<any> {
+    const today = new Date();
+
+    const currentDate = today.getDate();
+    const currentMonth = today.getMonth() + 1;
+    const currentYear = today.getFullYear();
+
+    const formattedDate = `${currentDate
+      .toString()
+      .padStart(2, '0')}.${currentMonth
+      .toString()
+      .padStart(2, '0')}.${currentYear}`;
+
+    const rounds$ = this._http
+      .get(`${environment.firebaseConfig.databaseURL}/matches.json`)
+      .pipe(map((response) => Object.values(response)));
+
+    const teams$ = this._http
+      .get(`${environment.firebaseConfig.databaseURL}/teams.json`)
+      .pipe(map((response) => Object.values(response)));
+
+    return forkJoin([rounds$, teams$]).pipe(
+      mergeMap(([rounds, teams]) => {
+        const allMatches = rounds.flatMap((matches) =>
+          matches.filter(
+            (match: { date: string }) => match.date === formattedDate
+          )
+        );
+        const matchesWithTeams = allMatches.map(
+          (match: { homeTeamId: any; awayTeamId: any }) => {
+            const homeTeam = teams.find((team) => team.id === match.homeTeamId);
+            const awayTeam = teams.find((team) => team.id === match.awayTeamId);
+            return { ...match, homeTeam, awayTeam };
+          }
+        );
+        return matchesWithTeams;
+      }),
+      toArray()
     );
   }
 }
