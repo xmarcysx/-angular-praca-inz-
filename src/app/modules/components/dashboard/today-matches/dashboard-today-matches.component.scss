@@ -1,0 +1,28 @@
+input.ng-invalid.ng-touched {
+  border: 1px solid red;
+}
+
+p-inputnumber.ng-invalid.ng-touched {
+  border: 1px solid red;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+form.ng-invalid.ng-submitted {
+  input.ng-invalid {
+    border: 1px solid red;
+  }
+
+  p-inputnumber.ng-invalid {
+    border: 1px solid red;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+  }
+
+  p-selectButton.ng-invalid {
+    display: flex;
+    border: 1px solid red !important;
+    border-radius: 6px;
+  }
+}
+// body > app-root > div > app-main-page > div > app-dashboard > div.w-2\/4 > app-dashboard-today-matches > p-dialog > div > div > div.ng-tns-c4042076560-1.p-dialog-content > div > form > div.flex.flex-col.justify-center.items-center.gap-3.py-5 > div:nth-child(1) > p-selectbutton > div

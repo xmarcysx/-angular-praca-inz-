@@ -17,55 +17,229 @@
       </div>
 
       <ng-container *ngFor="let match of matches">
-        <div class="bg-white dark:bg-black rounded-lg flex p-2 my-3">
-          <div class="flex flex-grow items-center">
-            <div class="flex flex-grow justify-between items-center">
-              <div class="flex flex-col items-center ml-3" style="width: 5%">
-                <h1 class="font-bold">{{ match.startTime }}</h1>
-              </div>
-              <div class="flex gap-10 items-center" style="width: 35%">
-                <img
-                  [src]="match.homeTeam.img"
-                  alt="HomeTeamImg"
-                  class="w-12 h-12"
-                />
-                <h1 class="text-lg font-bold">
-                  {{ match.homeTeam.name }}
-                </h1>
-              </div>
-              <div
-                class="flex justify-center items-center gap-5"
-                style="width: 10%"
-              >
-                <div class="text-2xl font-bold">
-                  {{ match?.homeTeamGoals ? match.homeTeamGoals.length : "" }}
+        <app-loading-ball *ngIf="loadingBall; else matches"></app-loading-ball>
+        <ng-template #matches>
+          <div class="bg-white dark:bg-black rounded-lg flex p-2 my-3">
+            <div class="flex flex-grow items-center">
+              <div class="flex flex-grow justify-between items-center">
+                <div class="flex flex-col items-center ml-3" style="width: 5%">
+                  <h1 class="font-bold">{{ match.startTime }}</h1>
                 </div>
-                <div>:</div>
-                <div class="text-2xl font-bold">
-                  {{ match?.awayTeamGoals ? match.awayTeamGoals.length : "" }}
+                <div class="flex gap-10 items-center" style="width: 35%">
+                  <img
+                    [src]="match.homeTeam.img"
+                    alt="HomeTeamImg"
+                    class="w-12 h-12"
+                  />
+                  <h1 class="text-lg font-bold">
+                    {{ match.homeTeam.name }}
+                  </h1>
                 </div>
+                <div
+                  class="flex justify-center items-center gap-5"
+                  style="width: 10%"
+                >
+                  <div
+                    *ngIf="match.status === 'waiting'"
+                    class="flex justify-center items-center gap-3"
+                  >
+                    <div *ngIf="!ableToStart">
+                      <div class="text-2xl font-bold">
+                        {{
+                          match?.homeTeamGoals ? match.homeTeamGoals.length : ""
+                        }}
+                      </div>
+                      <div>:</div>
+                      <div class="text-2xl font-bold">
+                        {{
+                          match?.awayTeamGoals ? match.awayTeamGoals.length : ""
+                        }}
+                      </div>
+                    </div>
+                    <div *ngIf="ableToStart">
+                      <button
+                        type="button"
+                        class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none font-medium rounded-lg text-lg px-4 py-2 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                        (click)="startMatch(match)"
+                      >
+                        Rozpocznij
+                      </button>
+                    </div>
+                  </div>
+                  <div
+                    *ngIf="match.status === 'started'"
+                    class="flex justify-center items-center gap-3"
+                  >
+                    <img
+                      (click)="openMatchDialog(match)"
+                      class="w-12 h-12 cursor-pointer"
+                      src="../../../../../assets/images/footballBall.png"
+                      alt="Ball"
+                    />
+                  </div>
+                  <div
+                    *ngIf="match.status === 'finished'"
+                    class="flex justify-center items-center gap-3"
+                  >
+                    <div
+                      *ngIf="!ableToStart"
+                      class="flex justify-center items-center gap-3"
+                    >
+                      <div class="text-2xl font-bold">
+                        {{
+                          match?.homeTeamGoals
+                            ? match.homeTeamGoals.length
+                            : "0"
+                        }}
+                      </div>
+                      <div>:</div>
+                      <div class="text-2xl font-bold">
+                        {{
+                          match?.awayTeamGoals
+                            ? match.awayTeamGoals.length
+                            : "0"
+                        }}
+                      </div>
+                    </div>
+                    <div *ngIf="ableToStart">
+                      <button
+                        type="button"
+                        class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none font-medium rounded-lg text-lg px-4 py-2 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                        (click)="startMatch(match)"
+                      >
+                        Rozpocznij
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="flex gap-10 items-center justify-end"
+                  style="width: 35%"
+                >
+                  <h1 class="text-lg font-bold">
+                    {{ match.awayTeam.name }}
+                  </h1>
+                  <img
+                    [src]="match.awayTeam.img"
+                    alt="AwayTeamImg"
+                    class="w-12 h-12"
+                  />
+                </div>
+                <div
+                  class="flex gap-10 justify-end items-center"
+                  style="width: 5%"
+                ></div>
               </div>
-              <div
-                class="flex gap-10 items-center justify-end"
-                style="width: 35%"
-              >
-                <h1 class="text-lg font-bold">
-                  {{ match.awayTeam.name }}
-                </h1>
-                <img
-                  [src]="match.awayTeam.img"
-                  alt="AwayTeamImg"
-                  class="w-12 h-12"
-                />
-              </div>
-              <div
-                class="flex gap-10 justify-end items-center"
-                style="width: 5%"
-              ></div>
             </div>
           </div>
-        </div>
+        </ng-template>
       </ng-container>
     </div>
   </div>
 </div>
+
+<p-dialog
+  header="Dodaj bramkę"
+  [(visible)]="showMatchDialog"
+  [style]="{ width: '80vw' }"
+>
+  <div class="card">
+    <div class="flex justify-center items-center gap-3 mt-3">
+      <div class="flex gap-10 items-center" style="width: 30%">
+        <img [src]="match?.homeTeam?.img" alt="HomeTeamImg" class="w-24 h-24" />
+        <h1 class="text-lg font-bold">
+          {{ match?.homeTeam?.name }}
+        </h1>
+      </div>
+      <div class="flex justify-center items-center gap-5" style="width: 10%">
+        <div
+          class="text-5xl font-bold p-5 bg-black text-white dark:bg-white dark:text-black"
+        >
+          {{ match?.homeTeamGoals ? match.homeTeamGoals.length : "0" }}
+        </div>
+        <div class="text-2xl">:</div>
+        <div
+          class="text-5xl font-bold p-5 bg-black text-white dark:bg-white dark:text-black"
+        >
+          {{ match?.awayTeamGoals ? match.awayTeamGoals.length : "0" }}
+        </div>
+      </div>
+      <div class="flex gap-10 items-center justify-end" style="width: 30%">
+        <h1 class="text-lg font-bold">
+          {{ match?.awayTeam?.name }}
+        </h1>
+        <img [src]="match?.awayTeam?.img" alt="AwayTeamImg" class="w-24 h-24" />
+      </div>
+    </div>
+    <form [formGroup]="form" (ngSubmit)="saveGoalScorer()">
+      <div
+        class="flex flex-col flex-grow justify-center items-center gap-3 py-5 w-1/2 mx-auto"
+      >
+        <p-selectButton
+          [options]="teamsOptions"
+          formControlName="choosenTeam"
+          optionLabel="label"
+          [className]="'flex flex-grow min-w-full justify-center'"
+        >
+          <ng-template let-team pTemplate>
+            <div class="flex gap-5 justify-center items-center">
+              <img [src]="team.value.img" class="w-10 h-10" alt="logo" />
+              <h1 class="font-bold text-black dark:text-white text-lg">
+                {{ team.value.name }}
+              </h1>
+            </div>
+          </ng-template>
+        </p-selectButton>
+
+        <div class="p-inputgroup">
+          <span class="p-inputgroup-addon">
+            <i class="pi pi-clock"></i>
+          </span>
+          <p-inputNumber
+            formControlName="choosenMinute"
+            mode="decimal"
+            [showButtons]="true"
+            inputId="minmax-buttons"
+            [min]="0"
+            [max]="90"
+            placeholder="Podaj minutę"
+          >
+          </p-inputNumber>
+        </div>
+
+        <div class="p-inputgroup">
+          <span class="p-inputgroup-addon">
+            <i class="pi pi-user"></i>
+          </span>
+          <input
+            pInputText
+            formControlName="choosenScorer"
+            placeholder="Podaj strzelca"
+          />
+        </div>
+      </div>
+      <div class="flex justify-center items-center gap-3 mt-3">
+        <button
+          type="reset"
+          (click)="closeMatchDialog()"
+          class="w-1/4 text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        >
+          Zamknij
+        </button>
+        <button
+          type="reset"
+          (click)="finishMatch(match)"
+          class="w-1/4 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+        >
+          Zakończ mecz
+        </button>
+        <button
+          type="submit"
+          class="w-1/4 text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+        >
+          Dodaj
+        </button>
+      </div>
+    </form>
+  </div>
+</p-dialog>

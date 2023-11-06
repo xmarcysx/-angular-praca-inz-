@@ -17,6 +17,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 
+import { InputTextModule } from 'primeng/inputtext';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { SelectButtonModule } from 'primeng/selectbutton';
 import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from '../environments/environment';
 import { HttpClientModule } from '@angular/common/http';
@@ -70,6 +73,9 @@ import { DashboardTodayMatches } from './modules/components/dashboard/today-matc
   imports: [
     EditorModule,
     DialogModule,
+    SelectButtonModule,
+    InputNumberModule,
+    InputTextModule,
     PaginatorModule,
     ConfirmDialogModule,
     BrowserModule,

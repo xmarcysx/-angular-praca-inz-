@@ -36,6 +36,20 @@
                 </h1>
               </div>
               <div
+                *ngIf="match?.status === 'started'"
+                class="flex justify-center items-center gap-5"
+                style="width: 10%"
+              >
+                <div class="text-2xl font-bold">
+                  {{ match?.homeTeamGoals ? match.homeTeamGoals.length : "0" }}
+                </div>
+                <div>:</div>
+                <div class="text-2xl font-bold">
+                  {{ match?.awayTeamGoals ? match.awayTeamGoals.length : "0" }}
+                </div>
+              </div>
+              <div
+                *ngIf="match?.status !== 'started'"
                 class="flex justify-center items-center gap-5"
                 style="width: 10%"
               >
@@ -65,6 +79,7 @@
                 style="width: 10%"
               >
                 <button
+                  *ngIf="match?.status === 'finished'"
                   type="button"
                   class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none font-medium rounded-lg text-lg px-4 py-2 text-center md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                   (click)="showMatchDetails(match)"

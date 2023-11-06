@@ -7,6 +7,7 @@ import {
   forkJoin,
   map,
   mergeMap,
+  switchMap,
   tap,
   toArray,
 } from 'rxjs';
@@ -356,5 +357,75 @@ export class FirebaseService {
       }),
       toArray()
     );
+  }
+
+  goalScored(
+    roundId: number,
+    matchId: number,
+    isHome: boolean,
+    data: any
+  ): Observable<any> {
+    const url = `${environment.firebaseConfig.databaseURL}/matches/${roundId}/${matchId}.json`;
+
+    return this._http.get(url).pipe(
+      switchMap((existingData: any) => {
+        if (isHome) {
+          if (existingData && existingData.homeTeamGoals) {
+            existingData.homeTeamGoals.push(data);
+          } else {
+            existingData = { homeTeamGoals: [data] };
+          }
+        } else {
+          if (existingData && existingData.awayTeamGoals) {
+            existingData.awayTeamGoals.push(data);
+          } else {
+            existingData = { awayTeamGoals: [data] };
+          }
+        }
+
+        return this._http.patch(url, existingData);
+      })
+    );
+  }
+
+  changeStatus(
+    roundId: number,
+    matchId: number,
+    status: string
+  ): Observable<any> {
+    const url = `${environment.firebaseConfig.databaseURL}/matches/${roundId}/${matchId}.json`;
+    return this._http.patch(url, { status: status });
+  }
+
+  addPointsAfterFinishedMatch(
+    homeGoals: number,
+    awayGoals: number,
+    homeTeamId: number,
+    awayTeamId: number
+  ) {
+    const urlHomeTeam = `${environment.firebaseConfig.databaseURL}/teams/${homeTeamId}.json`;
+    const urlAwayTeam = `${environment.firebaseConfig.databaseURL}/teams/${awayTeamId}.json`;
+
+    if (homeGoals > awayGoals) {
+      this._http.get(urlHomeTeam).subscribe((res: any) => {
+        this._http.patch(urlHomeTeam, { points: res.points + 3 }).subscribe();
+      });
+    } else if (homeGoals < awayGoals) {
+      this._http.get(urlAwayTeam).subscribe((res: any) => {
+        this._http.patch(urlAwayTeam, { points: res.points + 3 }).subscribe();
+      });
+    } else {
+      forkJoin([
+        this._http.get(urlHomeTeam),
+        this._http.get(urlAwayTeam),
+      ]).subscribe(([homeTeamData, awayTeamData]: [any, any]) => {
+        this._http
+          .patch(urlHomeTeam, { points: homeTeamData.points + 1 })
+          .subscribe();
+        this._http
+          .patch(urlAwayTeam, { points: awayTeamData.points + 1 })
+          .subscribe();
+      });
+    }
   }
 }

@@ -276,3 +276,51 @@ app-dashboard-admin-users {
 app-results > div > div > div > div:nth-child(2) > p-dropdown > .p-dropdown {
   width: 250px;
 }
+
+.p-inputtext:enabled:focus {
+  box-shadow: none;
+}
+
+.p-inputnumber-buttons-stacked .p-inputnumber-input {
+  border-radius: 0px !important;
+}
+
+.dark .p-inputtext {
+  background: transparent !important;
+  color: white;
+}
+
+.p-inputtext {
+  background: transparent !important;
+  color: #495057;
+}
+
+.dark .p-inputgroup-addon {
+  background: black;
+  color: white;
+}
+
+.p-inputgroup-addon {
+  background: rgb(28, 100, 242);
+  color: white;
+}
+
+input:-internal-autofill-selected {
+  background: transparent !important;
+}
+
+.dark .p-button {
+  color: white;
+}
+
+.p-button {
+  color: rgb(28, 100, 242);
+}
+
+.p-selectbutton .p-button {
+  background: transparent !important;
+}
+
+.p-selectbutton .p-button.p-highlight {
+  background: rgb(28, 100, 242) !important;
+}
