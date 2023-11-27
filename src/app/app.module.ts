@@ -43,6 +43,7 @@ import { CompetitionComponent } from './modules/components/competition/competiti
 import { DashboardCompetitionComponent } from './modules/components/dashboard/competition/dashboard-competition.component';
 import { ResultsComponent } from './modules/components/results/results.component';
 import { DashboardTodayMatches } from './modules/components/dashboard/today-matches/dashboard-today-matches.component';
+import { SingleMatchComponenet } from './modules/components/dashboard/today-matches/single-match/single-match.component';
 
 @NgModule({
   declarations: [
@@ -69,6 +70,7 @@ import { DashboardTodayMatches } from './modules/components/dashboard/today-matc
     CompetitionComponent,
     ResultsComponent,
     DashboardTodayMatches,
+    SingleMatchComponenet,
   ],
   imports: [
     EditorModule,

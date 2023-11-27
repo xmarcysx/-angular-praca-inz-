@@ -23,9 +23,7 @@ export class DashboardTodayMatches implements OnInit {
   constructor(
     private _firebaseService: FirebaseService,
     private fb: FormBuilder
-  ) {
-    this._ableToStartObservable();
-  }
+  ) {}
 
   async ngOnInit() {
     this._createForm();
@@ -38,6 +36,8 @@ export class DashboardTodayMatches implements OnInit {
       { label: match.homeTeam.name, value: match.homeTeam, home: true },
       { label: match.awayTeam.name, value: match.awayTeam, home: false },
     ];
+
+    console.log(this.form);
     this.showMatchDialog = true;
   }
 
@@ -64,8 +64,8 @@ export class DashboardTodayMatches implements OnInit {
           this._getAllTodaysMatches();
         });
 
-      this.showMatchDialog = false;
       this.form.reset();
+      this.showMatchDialog = false;
     }
   }
 
@@ -100,22 +100,6 @@ export class DashboardTodayMatches implements OnInit {
     this._firebaseService.getAllTodaysMatches().subscribe((res) => {
       this.matches = res;
       this.loadingBall = false;
-    });
-  }
-
-  private _ableToStartObservable() {
-    const timeObservable = interval(1000).pipe(map(() => new Date()));
-
-    timeObservable.subscribe((now) => {
-      if (
-        now.getHours() >= 19 &&
-        now.getMinutes() >= 0 &&
-        now.getSeconds() >= 0 &&
-        !this.ableToStart
-      ) {
-        this.ableToStart = true;
-        this._getAllTodaysMatches();
-      }
     });
   }
 

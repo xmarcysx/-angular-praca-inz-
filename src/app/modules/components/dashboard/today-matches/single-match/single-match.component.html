@@ -1,0 +1,93 @@
+<div class="bg-white dark:bg-black rounded-lg flex p-2 my-3">
+  <div class="flex flex-grow items-center">
+    <div class="flex flex-grow justify-between items-center">
+      <div class="flex flex-col items-center ml-3" style="width: 5%">
+        <h1 class="font-bold">{{ match.startTime }}</h1>
+      </div>
+      <div
+        class="flex gap-3 lg:gap-10 justify-center items-center"
+        style="width: 35%"
+      >
+        <img [src]="match.homeTeam.img" alt="HomeTeamImg" class="w-12 h-12" />
+        <h1 class="text-lg font-bold hidden lg:block">
+          {{ match.homeTeam.name }}
+        </h1>
+      </div>
+      <div class="flex justify-center items-center gap-5" style="width: 10%">
+        <div
+          *ngIf="match.status === 'waiting'"
+          class="flex justify-center items-center gap-3"
+        >
+          <div *ngIf="!ableToStart">
+            <div class="text-2xl font-bold">
+              {{ match?.homeTeamGoals ? match.homeTeamGoals.length : "" }}
+            </div>
+            <div>:</div>
+            <div class="text-2xl font-bold">
+              {{ match?.awayTeamGoals ? match.awayTeamGoals.length : "" }}
+            </div>
+          </div>
+          <div *ngIf="ableToStart">
+            <button
+              type="button"
+              class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none font-medium rounded-lg text-lg px-4 py-2 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              (click)="startMatch(match)"
+            >
+              Rozpocznij
+            </button>
+          </div>
+        </div>
+        <div
+          *ngIf="match.status === 'started'"
+          class="flex justify-center items-center gap-3"
+        >
+          <img
+            (click)="openMatchDialog(match)"
+            class="lg:w-12 cursor-pointer"
+            src="../../../../../assets/images/footballBall.png"
+            alt="Ball"
+          />
+        </div>
+        <div
+          *ngIf="match.status === 'finished'"
+          class="flex justify-center items-center gap-3"
+        >
+          <div
+            *ngIf="!ableToStart"
+            class="flex justify-center items-center gap-3"
+          >
+            <div class="text-2xl font-bold">
+              {{ match?.homeTeamGoals ? match.homeTeamGoals.length : "0" }}
+            </div>
+            <div>:</div>
+            <div class="text-2xl font-bold">
+              {{ match?.awayTeamGoals ? match.awayTeamGoals.length : "0" }}
+            </div>
+          </div>
+          <div *ngIf="ableToStart">
+            <button
+              type="button"
+              class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none font-medium rounded-lg text-lg px-4 py-2 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              (click)="startMatch(match)"
+            >
+              Rozpocznij
+            </button>
+          </div>
+        </div>
+      </div>
+      <div
+        class="flex gap-3 lg:gap-10 items-center justify-center"
+        style="width: 35%"
+      >
+        <h1 class="text-lg font-bold hidden lg:block">
+          {{ match.awayTeam.name }}
+        </h1>
+        <img [src]="match.awayTeam.img" alt="AwayTeamImg" class="w-12 h-12" />
+      </div>
+      <div
+        class="flex gap-3 lg:gap-10 justify-end items-center"
+        style="width: 5%"
+      ></div>
+    </div>
+  </div>
+</div>
