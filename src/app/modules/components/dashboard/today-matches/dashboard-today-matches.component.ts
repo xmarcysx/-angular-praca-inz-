@@ -108,8 +108,9 @@ export class DashboardTodayMatches implements OnInit {
 
     timeObservable.subscribe((now) => {
       if (
-        now.getHours() === 17 &&
-        now.getMinutes() === 0 &&
+        now.getHours() >= 19 &&
+        now.getMinutes() >= 0 &&
+        now.getSeconds() >= 0 &&
         !this.ableToStart
       ) {
         this.ableToStart = true;

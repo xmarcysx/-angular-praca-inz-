@@ -32,7 +32,10 @@
               "node_modules/quill/dist/quill.snow.css",
               "src/styles.scss"
             ],
-            "scripts": ["node_modules/quill/dist/quill.js"]
+            "scripts": [
+              "node_modules/quill/dist/quill.js",
+              "node_modules/flowbite/dist/flowbite.js"
+            ]
           },
           "configurations": {
             "production": {

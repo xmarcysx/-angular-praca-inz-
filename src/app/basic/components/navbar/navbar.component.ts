@@ -1,5 +1,7 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { log } from 'firebase-functions/logger';
+import { initFlowbite } from 'flowbite';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { FirebaseService } from 'src/app/shared/services/firebase.service';
@@ -20,6 +22,7 @@ export class NavbarComponent implements OnInit {
   root = window.document.documentElement;
   themeName: string = '';
   isHidden: boolean = true;
+  isNavbarHidden: boolean = true;
   email: string = '';
   userData: any;
 
@@ -34,6 +37,7 @@ export class NavbarComponent implements OnInit {
   logo = '../../../../assets/images/userProfile.png';
 
   async ngOnInit() {
+    initFlowbite();
     document.addEventListener('click', this.handleClickOutside.bind(this));
 
     this.isLoggedInAdmin = this._authSerivce.isLoggedInAdmin;
@@ -71,11 +75,16 @@ export class NavbarComponent implements OnInit {
   handleClickOutside(event: Event) {
     if (!this.el.nativeElement.contains(event.target)) {
       this.isHidden = true;
+      this.isNavbarHidden = true;
     }
   }
 
   openSettings() {
     this.isHidden = !this.isHidden;
+  }
+
+  openNavbar() {
+    this.isNavbarHidden = !this.isNavbarHidden;
   }
 
   onToggleTheme() {

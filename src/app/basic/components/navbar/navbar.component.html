@@ -2,14 +2,18 @@
   class="flex justify-between flex-grow mb-2 z-20 w-100 bg-gray-200 bg-clip-padding bg-opacity-50 dark:bg-gray-800 dark:bg-clip-padding dark:bg-opacity-70"
 >
   <div class="flex flex-wrap items-center flex-grow justify-between p-2 w-100">
-    <a routerLink="/dashboard" class="flex items-center">
+    <a
+      (click)="this.isNavbarHidden = true; this.isHidden = true"
+      routerLink="/dashboard"
+      class="flex items-center"
+    >
       <img src="../../../../assets/images/logo.png" class="h-10" alt="Logo" />
       <span
         class="self-center text-xl font-semibold whitespace-nowrap dark:text-white"
         >RegionalnieLive</span
       >
     </a>
-    <div class="flex items-center lg:order-2" *ngIf="!isLoggedIn">
+    <div class="flex items-center justify-end lg:order-2" *ngIf="!isLoggedIn">
       <button
         type="button"
         class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
@@ -18,7 +22,8 @@
         Zaloguj się
       </button>
     </div>
-    <div class="flex items-center lg:order-2" *ngIf="isLoggedIn">
+
+    <div *ngIf="isLoggedIn" class="flex items-center lg:order-2">
       <div
         class="flex items-center mx-4 cursor-pointer"
         (click)="onToggleTheme()"
@@ -80,6 +85,7 @@
       </div>
 
       <button
+        (click)="openNavbar()"
         data-collapse-toggle="navbar-user"
         type="button"
         class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-black rounded-lg lg:hidden hover:bg-black hover:text-white focus:outline-none dark:text-white dark:hover:bg-white dark:hover:text-black"
@@ -104,15 +110,18 @@
         </svg>
       </button>
     </div>
+
     <div
-      class="items-center justify-between hidden w-full lg:flex lg:w-auto lg:order-1"
+      *ngIf="!isLoggedInAdmin && isLoggedIn"
+      [hidden]="isNavbarHidden"
+      class="items-center justify-between w-full lg:flex lg:w-auto lg:order-1"
       id="navbar-user"
-      *ngIf="isLoggedIn && !isLoggedInAdmin"
     >
       <ul
         class="flex flex-col gap-4 lg:gap-0 lg:items-center font-medium p-4 lg:p-0 mt-4 rounded-lg lg:flex-row lg:space-x-8 lg:mt-0"
       >
         <li
+          (click)="this.isNavbarHidden = true"
           routerLink="/dashboard"
           routerLinkActive="active"
           class="flex px-4 py-2 lg:py-1 text-black rounded cursor-pointer hover:bg-white dark:text-white dark:hover:text-black"
@@ -121,6 +130,7 @@
           <a class="px-2" aria-current="page">Dashboard</a>
         </li>
         <li
+          (click)="this.isNavbarHidden = true"
           routerLink="/rozgrywki"
           routerLinkActive="active"
           class="flex px-4 py-2 lg:py-1 text-black rounded cursor-pointer hover:bg-white dark:text-white dark:hover:text-black"
@@ -129,6 +139,7 @@
           <a class="px-2" aria-current="page">Rozgrywki</a>
         </li>
         <li
+          (click)="this.isNavbarHidden = true"
           routerLink="/wyniki"
           routerLinkActive="active"
           class="flex px-4 py-2 lg:py-1 text-black rounded cursor-pointer hover:bg-white dark:text-white dark:hover:text-black"
@@ -137,6 +148,7 @@
           <a class="px-2" aria-current="page">Wyniki</a>
         </li>
         <li
+          (click)="this.isNavbarHidden = true"
           routerLink="/forum"
           routerLinkActive="active"
           class="flex px-4 py-2 lg:py-1 text-black rounded cursor-pointer hover:bg-white dark:text-white dark:hover:text-black"
@@ -147,7 +159,8 @@
       </ul>
     </div>
     <div
-      class="items-center justify-between hidden w-full lg:flex lg:w-auto lg:order-1"
+      [hidden]="isNavbarHidden"
+      class="items-center justify-between w-full lg:flex lg:w-auto lg:order-1"
       id="navbar-user"
       *ngIf="isLoggedInAdmin && isLoggedIn"
     >
@@ -155,6 +168,7 @@
         class="flex flex-col gap-4 lg:gap-0 lg:items-center font-medium p-4 lg:p-0 mt-4 rounded-lg lg:flex-row lg:space-x-8 lg:mt-0"
       >
         <li
+          (click)="this.isNavbarHidden = true"
           routerLink="/dashboard"
           routerLinkActive="active"
           class="flex px-4 py-2 lg:py-1 text-black rounded cursor-pointer hover:bg-white dark:text-white dark:hover:text-black"
@@ -163,6 +177,7 @@
           <a class="px-2" aria-current="page">Dashboard</a>
         </li>
         <li
+          (click)="this.isNavbarHidden = true"
           routerLink="/admin/uzytkownicy"
           routerLinkActive="active"
           class="flex px-4 py-2 lg:py-1 text-black rounded cursor-pointer hover:bg-white dark:text-white dark:hover:text-black"
@@ -171,6 +186,7 @@
           <a class="px-2" aria-current="page">Zarządzaj użytkownikami</a>
         </li>
         <li
+          (click)="this.isNavbarHidden = true"
           routerLink="/rozgrywki"
           routerLinkActive="active"
           class="flex px-4 py-2 lg:py-1 text-black rounded cursor-pointer hover:bg-white dark:text-white dark:hover:text-black"
@@ -179,6 +195,7 @@
           <a class="px-2" aria-current="page">Rozgrywki</a>
         </li>
         <li
+          (click)="this.isNavbarHidden = true"
           routerLink="/forum"
           routerLinkActive="active"
           class="flex px-4 py-2 lg:py-1 text-black rounded cursor-pointer hover:bg-white dark:text-white dark:hover:text-black"

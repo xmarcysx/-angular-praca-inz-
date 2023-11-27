@@ -66,14 +66,7 @@ app-navbar {
 app-about-us,
 app-contact,
 app-privacy-policy,
-app-terms,
-app-starting-page,
-app-settings,
-app-starting-page,
-app-change-username,
-app-change-profile-logo,
-app-change-password,
-app-change-email-address {
+app-terms {
   width: fit-content;
   overflow-y: auto;
   margin: auto;
@@ -190,6 +183,12 @@ app-dashboard {
 }
 
 app-news,
+app-settings,
+app-starting-page,
+app-change-username,
+app-change-profile-logo,
+app-change-password,
+app-change-email-address,
 app-competition,
 app-results,
 app-manage-users,
@@ -269,7 +268,6 @@ app-dashboard-admin-users {
 }
 
 .dashboard-message {
-  width: 15vw;
   word-wrap: break-word;
 }
 
@@ -313,8 +311,10 @@ input:-internal-autofill-selected {
   color: white;
 }
 
-.p-button {
-  color: rgb(28, 100, 242);
+#passMinute {
+  .p-button {
+    color: rgb(28, 100, 242);
+  }
 }
 
 .p-selectbutton .p-button {

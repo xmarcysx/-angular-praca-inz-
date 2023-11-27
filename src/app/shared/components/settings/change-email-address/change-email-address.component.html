@@ -1,10 +1,10 @@
-<div class="flex justify-center items-center">
+<div class="flex flex-grow min-h-full justify-center items-center">
   <div
     class="bg-gray-100 rounded-md bg-clip-padding backdrop-filter bg-opacity-40 duration-500 text-gray-900 px-3.5 w-[500px] dark:bg-gray-800 dark:rounded-md dark:bg-clip-padding dark:backdrop-filter dark:bg-opacity-40 dark:text-gray-100"
   >
     <app-loading-ball *ngIf="loadingBall; else form"></app-loading-ball>
     <ng-template #form>
-      <div class="px-6 py-8 mx-auto lg:py-0">
+      <div class="px-6 py-8 mx-auto w-100 lg:py-0">
         <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
           <h1
             class="text-xl font-bold leading-tight tracking-tight text-center text-gray-900 md:text-2xl dark:text-white"

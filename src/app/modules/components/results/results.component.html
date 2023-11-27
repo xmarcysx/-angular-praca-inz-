@@ -2,7 +2,7 @@
   <div
     class="flex justify-center min-w-full bg-gray-100 rounded-md bg-clip-padding bg-opacity-40 duration-500 text-gray-900 dark:bg-gray-800 dark:rounded-md dark:bg-clip-padding dark:bg-opacity-40 dark:text-gray-100"
   >
-    <div class="w-4/5 py-0 mx-auto">
+    <div class="w-100 lg:w-4/5 py-0 mx-auto">
       <div class="flex justify-center pt-3">
         <h1 class="p-5 font-bold dark:text-white text-black text-3xl">
           Wyniki
@@ -21,17 +21,20 @@
         <div class="bg-white dark:bg-black rounded-lg flex p-2 my-3">
           <div class="flex flex-grow items-center">
             <div class="flex flex-grow justify-between gap-10 items-center">
-              <div class="flex flex-col items-center ml-3" style="width: 10%">
+              <div
+                class="flex-col items-center ml-3 hidden lg:flex"
+                style="width: 10%"
+              >
                 <h1>{{ match.date }}</h1>
                 <h1>{{ match.startTime }}</h1>
               </div>
-              <div class="flex gap-10 items-center" style="width: 30%">
+              <div class="flex gap-3 lg:gap-10 items-center" style="width: 30%">
                 <img
                   [src]="match.homeTeam.img"
                   alt="HomeTeamImg"
                   class="w-12 h-12"
                 />
-                <h1 class="text-lg font-bold">
+                <h1 class="text-lg font-bold hidden lg:block">
                   {{ match.homeTeam.name }}
                 </h1>
               </div>
@@ -49,7 +52,7 @@
                 </div>
               </div>
               <div
-                *ngIf="match?.status !== 'started'"
+                *ngIf="match?.status === 'waiting'"
                 class="flex justify-center items-center gap-5"
                 style="width: 10%"
               >
@@ -62,10 +65,23 @@
                 </div>
               </div>
               <div
-                class="flex gap-10 items-center justify-end"
+                *ngIf="match?.status === 'finished'"
+                class="flex justify-center items-center gap-5"
+                style="width: 10%"
+              >
+                <div class="text-2xl font-bold">
+                  {{ match?.homeTeamGoals ? match.homeTeamGoals.length : "0" }}
+                </div>
+                <div>:</div>
+                <div class="text-2xl font-bold">
+                  {{ match?.awayTeamGoals ? match.awayTeamGoals.length : "0" }}
+                </div>
+              </div>
+              <div
+                class="flex gap-3 lg:gap-10 lg:w-8 items-center justify-end"
                 style="width: 30%"
               >
-                <h1 class="text-lg font-bold">
+                <h1 class="text-lg font-bold hidden lg:block">
                   {{ match.awayTeam.name }}
                 </h1>
                 <img
@@ -84,7 +100,8 @@
                   class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none font-medium rounded-lg text-lg px-4 py-2 text-center md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                   (click)="showMatchDetails(match)"
                 >
-                  Szczegóły
+                  <i class="pi pi-search"></i>
+                  <span class="hidden lg:inline-block lg:ml-2">Szczegóły</span>
                 </button>
               </div>
             </div>
@@ -108,7 +125,7 @@
       <h1>{{ match?.startTime }}</h1>
     </div>
     <div class="flex justify-center items-center gap-3 mt-3">
-      <div class="flex gap-10 items-center" style="width: 30%">
+      <div class="gap-10 items-center hidden lg:flex" style="width: 30%">
         <img [src]="match?.homeTeam?.img" alt="HomeTeamImg" class="w-24 h-24" />
         <h1 class="text-lg font-bold">
           {{ match?.homeTeam?.name }}
@@ -118,16 +135,19 @@
         <div
           class="text-5xl font-bold p-5 bg-black text-white dark:bg-white dark:text-black"
         >
-          {{ match?.homeTeamGoals ? match.homeTeamGoals.length : "" }}
+          {{ match?.homeTeamGoals ? match.homeTeamGoals.length : "0" }}
         </div>
         <div class="text-2xl">:</div>
         <div
           class="text-5xl font-bold p-5 bg-black text-white dark:bg-white dark:text-black"
         >
-          {{ match?.awayTeamGoals ? match.awayTeamGoals.length : "" }}
+          {{ match?.awayTeamGoals ? match.awayTeamGoals.length : "0" }}
         </div>
       </div>
-      <div class="flex gap-10 items-center justify-end" style="width: 30%">
+      <div
+        class="gap-10 items-center justify-end hidden lg:flex"
+        style="width: 30%"
+      >
         <h1 class="text-lg font-bold">
           {{ match?.awayTeam?.name }}
         </h1>
@@ -168,7 +188,7 @@
     <div class="flex justify-center items-center gap-3 mt-3">
       <button
         (click)="closeMatchDetails()"
-        class="w-1/4 text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        class="w-1/2 lg:w-1/4 text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
       >
         Zamknij
       </button>

@@ -1,14 +1,16 @@
-<div class="w-1/4">
-  <ng-container *ngIf="ifAdmin; else competition">
-    <app-dashboard-admin-users></app-dashboard-admin-users>
-  </ng-container>
-  <ng-template #competition>
-    <app-dashboard-competition></app-dashboard-competition>
-  </ng-template>
-</div>
-<div class="w-2/4">
-  <app-dashboard-today-matches></app-dashboard-today-matches>
-</div>
-<div class="w-1/4">
-  <app-dashboard-news></app-dashboard-news>
+<div class="flex flex-grow flex-col lg:flex-row w-100">
+  <div class="w-100 lg:w-1/4">
+    <ng-container *ngIf="ifAdmin; else competition">
+      <app-dashboard-admin-users></app-dashboard-admin-users>
+    </ng-container>
+    <ng-template #competition>
+      <app-dashboard-competition></app-dashboard-competition>
+    </ng-template>
+  </div>
+  <div class="w-100 lg:w-1/2">
+    <app-dashboard-today-matches></app-dashboard-today-matches>
+  </div>
+  <div class="w-100 lg:w-1/4">
+    <app-dashboard-news></app-dashboard-news>
+  </div>
 </div>
