@@ -34,6 +34,7 @@
   header="Dodaj bramkę"
   [(visible)]="showMatchDialog"
   [style]="{ width: '80vw' }"
+  (onHide)="closeMatchDialog()"
 >
   <div class="card">
     <div class="flex justify-center items-center gap-3 mt-3">
@@ -69,7 +70,12 @@
         <img [src]="match?.awayTeam?.img" alt="AwayTeamImg" class="w-24 h-24" />
       </div>
     </div>
-    <form [formGroup]="form">
+    <form
+      [formGroup]="form"
+      (ngSubmit)="saveGoalScorer()"
+      ngNativeValidate
+      [class.ng-submitted]="formSubmitted"
+    >
       <div
         class="flex flex-col flex-grow justify-center items-center gap-3 py-5 w-100 lg:w-1/2 mx-auto"
       >
@@ -135,8 +141,7 @@
           Zakończ
         </button>
         <button
-          (click)="saveGoalScorer()"
-          type="text"
+          type="submit"
           class="w-1/3 lg:w-1/4 text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
         >
           Dodaj

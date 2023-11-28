@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { log } from 'firebase-functions/logger';
 import { interval, map } from 'rxjs';
 import { FirebaseService } from 'src/app/shared/services/firebase.service';
@@ -25,7 +30,7 @@ export class DashboardTodayMatches implements OnInit {
     private fb: FormBuilder
   ) {}
 
-  async ngOnInit() {
+  ngOnInit() {
     this._createForm();
     this._getAllTodaysMatches();
   }
@@ -36,18 +41,20 @@ export class DashboardTodayMatches implements OnInit {
       { label: match.homeTeam.name, value: match.homeTeam, home: true },
       { label: match.awayTeam.name, value: match.awayTeam, home: false },
     ];
-
-    console.log(this.form);
     this.showMatchDialog = true;
   }
 
   closeMatchDialog() {
     this.form.reset();
-
+    this.formSubmitted = false;
     this.showMatchDialog = false;
   }
 
+  formSubmitted = false;
+
   saveGoalScorer() {
+    this.formSubmitted = true;
+
     if (this.form.valid) {
       const roundId = this.match.roundId;
       const matchId = this.match.matchId;
@@ -64,7 +71,7 @@ export class DashboardTodayMatches implements OnInit {
           this._getAllTodaysMatches();
         });
 
-      this.form.reset();
+      this.formSubmitted = false;
       this.showMatchDialog = false;
     }
   }
@@ -79,6 +86,7 @@ export class DashboardTodayMatches implements OnInit {
 
   finishMatch(match: any) {
     this.form.reset();
+    this.formSubmitted = false;
     this.showMatchDialog = false;
     this.ableToStart = false;
 
@@ -104,13 +112,14 @@ export class DashboardTodayMatches implements OnInit {
   }
 
   private _createForm() {
-    this.form = this.fb.group({
-      choosenTeam: [null, Validators.required],
-      choosenMinute: [
-        null,
-        [Validators.required, Validators.min(0), Validators.max(90)],
-      ],
-      choosenScorer: [null, Validators.required],
+    this.form = new FormGroup({
+      choosenTeam: new FormControl(null, Validators.required),
+      choosenMinute: new FormControl(null, [
+        Validators.required,
+        Validators.min(0),
+        Validators.max(90),
+      ]),
+      choosenScorer: new FormControl(null, Validators.required),
     });
   }
 }
