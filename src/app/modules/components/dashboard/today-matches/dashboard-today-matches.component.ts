@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFireDatabase } from '@angular/fire/compat/database';
 import {
   FormBuilder,
   FormControl,
@@ -6,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { log } from 'firebase-functions/logger';
-import { interval, map } from 'rxjs';
+import { Subscription, interval, map } from 'rxjs';
 import { FirebaseService } from 'src/app/shared/services/firebase.service';
 import { FormService } from 'src/app/shared/services/form.service';
 
@@ -26,14 +27,20 @@ export class DashboardTodayMatches implements OnInit {
   showMatchDialog: boolean = false;
 
   constructor(
+    private _firestore: AngularFireDatabase,
     private _firebaseService: FirebaseService,
     private _formService: FormService,
     private fb: FormBuilder
   ) {}
 
   ngOnInit() {
+    this._firestore
+      .list('matches')
+      .valueChanges()
+      .subscribe(() => {
+        this._getAllTodaysMatches();
+      });
     this._createForm();
-    this._getAllTodaysMatches();
   }
 
   openMatchDialog(match: any) {
@@ -68,9 +75,7 @@ export class DashboardTodayMatches implements OnInit {
 
       this._firebaseService
         .goalScored(roundId, matchId, isHome, data)
-        .subscribe(() => {
-          this._getAllTodaysMatches();
-        });
+        .subscribe();
 
       this.formSubmitted = false;
       this.showMatchDialog = false;
@@ -78,11 +83,10 @@ export class DashboardTodayMatches implements OnInit {
   }
 
   startMatch(match: any) {
+    this._formService.matchStarted(match);
     this._firebaseService
       .changeStatus(match.roundId, match.matchId, 'started')
-      .subscribe(() => {
-        this._getAllTodaysMatches();
-      });
+      .subscribe();
   }
 
   finishMatch(match: any) {
@@ -101,7 +105,6 @@ export class DashboardTodayMatches implements OnInit {
           match.homeTeam.id,
           match.awayTeam.id
         );
-        this._getAllTodaysMatches();
       });
   }
 
@@ -109,6 +112,9 @@ export class DashboardTodayMatches implements OnInit {
     this.loadingBall = true;
     this._firebaseService.getAllTodaysMatches().subscribe((res) => {
       this.matches = res;
+      this.form.reset();
+      this.formSubmitted = false;
+      this.showMatchDialog = false;
       this.loadingBall = false;
     });
   }

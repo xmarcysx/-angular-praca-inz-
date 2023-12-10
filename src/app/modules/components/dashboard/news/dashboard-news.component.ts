@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { AngularFireDatabase } from '@angular/fire/compat/database';
 import { forkJoin } from 'rxjs';
 import { FirebaseService } from 'src/app/shared/services/firebase.service';
 
@@ -17,12 +18,18 @@ export class DashboardNews implements OnInit {
   loadingBall: boolean = false;
 
   constructor(
+    private _firestore: AngularFireDatabase,
     private _firebaseService: FirebaseService,
     private cdRef: ChangeDetectorRef
   ) {}
 
   async ngOnInit() {
-    this.getAllMessages();
+    this._firestore
+      .list('messages')
+      .valueChanges()
+      .subscribe(() => {
+        this.getAllMessages();
+      });
   }
 
   getAllMessages() {

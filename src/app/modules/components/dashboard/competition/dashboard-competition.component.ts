@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { AngularFireDatabase } from '@angular/fire/compat/database';
 import { map, take } from 'rxjs';
 import { FirebaseService } from 'src/app/shared/services/firebase.service';
 
@@ -11,12 +12,18 @@ export class DashboardCompetitionComponent implements OnInit {
   loadingBall: boolean = false;
 
   constructor(
+    private _firestore: AngularFireDatabase,
     private _firebaseService: FirebaseService,
     private cdRef: ChangeDetectorRef
   ) {}
 
   async ngOnInit() {
-    this._getAllTeamsTable();
+    this._firestore
+      .list('teams')
+      .valueChanges()
+      .subscribe(() => {
+        this._getAllTeamsTable();
+      });
   }
 
   private _getAllTeamsTable() {

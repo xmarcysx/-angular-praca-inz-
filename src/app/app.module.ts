@@ -44,6 +44,7 @@ import { DashboardCompetitionComponent } from './modules/components/dashboard/co
 import { ResultsComponent } from './modules/components/results/results.component';
 import { DashboardTodayMatches } from './modules/components/dashboard/today-matches/dashboard-today-matches.component';
 import { SingleMatchComponenet } from './modules/components/dashboard/today-matches/single-match/single-match.component';
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 
 @NgModule({
   declarations: [
@@ -88,6 +89,7 @@ import { SingleMatchComponenet } from './modules/components/dashboard/today-matc
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
+    AngularFireDatabaseModule,
     ToastModule,
     CommonModule,
   ],

@@ -22,7 +22,7 @@ export class SingleMatchComponenet implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>();
 
-  constructor(private _formService: FormService) {}
+  constructor() {}
 
   ngOnInit() {
     this._ableToStartObservable();
@@ -34,7 +34,6 @@ export class SingleMatchComponenet implements OnInit, OnDestroy {
 
   startMatch(match: any) {
     this.matchStarted.emit(match);
-    this._formService.matchStarted(this.match);
   }
 
   ngOnDestroy() {
