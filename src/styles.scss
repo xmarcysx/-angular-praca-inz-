@@ -324,3 +324,20 @@ input:-internal-autofill-selected {
 .p-selectbutton .p-button.p-highlight {
   background: rgb(28, 100, 242) !important;
 }
+
+#custom {
+  .p-toast-message-content {
+    background-color: white;
+
+    .p-toast-message-icon::before {
+      content: "";
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 3rem;
+      height: 3rem;
+      background-image: url("./assets/images/footballBall.png");
+      background-size: contain;
+    }
+  }
+}

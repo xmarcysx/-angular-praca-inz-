@@ -11,6 +11,7 @@ import { take } from 'rxjs';
 })
 export class DashboardAdminUsers {
   users: any[] = [];
+  loadingBall: boolean = false;
 
   constructor(private _firebaseService: FirebaseService) {}
 
@@ -19,11 +20,13 @@ export class DashboardAdminUsers {
   }
 
   getAllUsersList() {
+    this.loadingBall = true;
     this._firebaseService
       .getAllUsersAdmin()
       .pipe(take(5))
       .subscribe((res) => {
         this.users = res;
+        this.loadingBall = false;
       });
   }
 }

@@ -1,21 +1,28 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { log } from 'firebase-functions/logger';
-import { interval, map } from 'rxjs';
-import { FirebaseService } from 'src/app/shared/services/firebase.service';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
+import { Subject, interval, map, takeUntil } from 'rxjs';
+import { FormService } from 'src/app/shared/services/form.service';
 
 @Component({
   selector: 'app-single-match',
   templateUrl: './single-match.component.html',
 })
-export class SingleMatchComponenet implements OnInit {
+export class SingleMatchComponenet implements OnInit, OnDestroy {
   @Input() match: any;
   @Output() matchStarted = new EventEmitter();
   @Output() matchDialogOpened = new EventEmitter();
 
   ableToStart: boolean = false;
 
-  constructor() {}
+  private destroy$ = new Subject<void>();
+
+  constructor(private _formService: FormService) {}
 
   ngOnInit() {
     this._ableToStartObservable();
@@ -27,47 +34,43 @@ export class SingleMatchComponenet implements OnInit {
 
   startMatch(match: any) {
     this.matchStarted.emit(match);
+    this._formService.matchStarted(this.match);
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   private _ableToStartObservable() {
-    // const date = new Date();
+    const dateObservable = interval(1000).pipe(
+      map(() => new Date()),
+      takeUntil(this.destroy$)
+    );
 
-    // const day = String(date.getDate()).padStart(2, '0');
-    // const month = String(date.getMonth() + 1).padStart(2, '0');
-    // const year = date.getFullYear();
-    // const formattedDate = `${day}.${month}.${year}`;
+    const dateComponents = this.match.date.split('.').map(Number);
+    const timeComponents = this.match.startTime.split(':').map(Number);
+    const matchDateTime = new Date(
+      dateComponents[2],
+      dateComponents[1] - 1,
+      dateComponents[0],
+      timeComponents[0],
+      timeComponents[1]
+    );
 
-    // const hour = date.getHours();
-    // const minute = date.getMinutes();
-    // const formattedTime = `${hour}:${minute}`;
-
-    // console.log(formattedDate, formattedTime);
-    // if (
-    //   this.match.date === formattedDate &&
-    //   this.match.startMatch === formattedTime &&
-    //   this.match.status === 'waiting'
-    // ) {
-    //   this.ableToStart = true;
-    // }
-
-    const dateObservable = interval(1000).pipe(map(() => new Date()));
+    const fifteenMinutesLater = new Date(
+      matchDateTime.getTime() + 15 * 60 * 1000
+    );
 
     dateObservable.subscribe((date) => {
-      const day = String(date.getDate()).padStart(2, '0');
-      const month = String(date.getMonth() + 1).padStart(2, '0');
-      const year = date.getFullYear();
-      const formattedDate = `${day}.${month}.${year}`;
-
-      const hour = date.getHours();
-      const minute = date.getMinutes();
-      const formattedTime = `${hour}:${minute}`;
-
       if (
-        this.match.date === formattedDate &&
-        this.match.startTime === formattedTime &&
+        date.getTime() >= matchDateTime.getTime() &&
+        date.getTime() <= fifteenMinutesLater.getTime() &&
         this.match.status === 'waiting'
       ) {
         this.ableToStart = true;
+      } else {
+        this.ableToStart = false;
       }
     });
   }

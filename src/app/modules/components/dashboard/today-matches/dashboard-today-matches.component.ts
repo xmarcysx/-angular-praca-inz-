@@ -8,6 +8,7 @@ import {
 import { log } from 'firebase-functions/logger';
 import { interval, map } from 'rxjs';
 import { FirebaseService } from 'src/app/shared/services/firebase.service';
+import { FormService } from 'src/app/shared/services/form.service';
 
 @Component({
   selector: 'app-dashboard-today-matches',
@@ -22,11 +23,11 @@ export class DashboardTodayMatches implements OnInit {
   loadingBall: boolean = false;
   ableToStart: boolean = false;
   teamsOptions: any;
-
   showMatchDialog: boolean = false;
 
   constructor(
     private _firebaseService: FirebaseService,
+    private _formService: FormService,
     private fb: FormBuilder
   ) {}
 
@@ -89,6 +90,7 @@ export class DashboardTodayMatches implements OnInit {
     this.formSubmitted = false;
     this.showMatchDialog = false;
     this.ableToStart = false;
+    this._formService.matchFinished(match);
 
     this._firebaseService
       .changeStatus(match.roundId, match.matchId, 'finished')

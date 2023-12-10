@@ -5,6 +5,7 @@ import { MessageService } from 'primeng/api';
 import { LoginStorageService } from './login-storage.service';
 import { FirebaseService } from './firebase.service';
 import { Observable, Subject } from 'rxjs';
+import { FormService } from './form.service';
 
 @Injectable({
   providedIn: 'root',
@@ -18,6 +19,7 @@ export class AuthService {
   emailHasChanged: Subject<string> = new Subject();
 
   constructor(
+    private _formService: FormService,
     private _angularFireAuth: AngularFireAuth,
     private _router: Router,
     private _messageService: MessageService,
@@ -26,15 +28,27 @@ export class AuthService {
   ) {}
 
   // rejestracja
-  async signUp(email: string, password: string): Promise<any> {
+  async signUp(
+    email: string,
+    password: string,
+    username: string
+  ): Promise<any> {
     try {
       const result = await this._angularFireAuth.createUserWithEmailAndPassword(
         email,
         password
       );
       if (result.user) {
+        this._firebaseService.addUserToDatabase(
+          username,
+          email,
+          result.user.uid
+        );
+        this._formService.showSuccess(
+          'Sukces',
+          'Użytkownik został zarejestrowany'
+        );
         this._router.navigate(['logowanie']);
-        return result.user.uid;
       }
     } catch (error) {
       this._handleAuthError(error);

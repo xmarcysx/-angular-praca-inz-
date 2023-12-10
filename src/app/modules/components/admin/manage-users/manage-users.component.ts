@@ -30,10 +30,12 @@ export class ManageUsersComponent {
   }
 
   getAllUsersList() {
+    this.loader = true;
     this._firebaseService.getAllUsersAdmin().subscribe((res) => {
       this.users = res;
       this.totalRecords = this.users.length;
       this.onPageChange({ first: 0, rows: 10 });
+      this.loader = false;
     });
   }
 

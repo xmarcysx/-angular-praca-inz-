@@ -274,19 +274,27 @@ export class FirebaseService {
   addMessageToDatabase(userEmail: string, message: any) {
     const currentDate = new Date();
     const day = currentDate.getDate();
-    const month = currentDate.getMonth() + 1; // Dodaj 1, ponieważ styczeń ma indeks 0
+    const month = currentDate.getMonth() + 1;
     const year = currentDate.getFullYear();
     const hours = currentDate.getHours();
     const minutes = currentDate.getMinutes();
-    const formattedMinutes = minutes.toString().padStart(2, '0'); // Dodaj wiodący zerowy znak
+    const formattedMinutes = minutes.toString().padStart(2, '0');
 
-    const formattedDate = `${day}.${month}.${year} - ${hours}:${formattedMinutes}`;
-    this._http
-      .post(`${environment.firebaseConfig.databaseURL}/messages.json`, {
-        userEmail: userEmail,
-        message: message,
-        date: formattedDate,
-      })
+    this.getUserDataByEmail(userEmail)
+      .pipe(
+        switchMap((res) => {
+          const userUID = res.uid;
+          const formattedDate = `${day}.${month}.${year} - ${hours}:${formattedMinutes}`;
+          return this._http.post(
+            `${environment.firebaseConfig.databaseURL}/messages.json`,
+            {
+              userUID,
+              message,
+              date: formattedDate,
+            }
+          );
+        })
+      )
       .subscribe();
   }
 

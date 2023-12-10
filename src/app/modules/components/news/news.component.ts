@@ -25,6 +25,7 @@ export class NewsComponent implements OnInit {
   visible: boolean = false;
   rowsPerPageOptions = [10, 20, 50];
   totalRecords!: number;
+  loadingBall: boolean = false;
 
   constructor(
     private el: ElementRef,
@@ -58,6 +59,7 @@ export class NewsComponent implements OnInit {
   }
 
   getAllMessages() {
+    this.loadingBall = true;
     forkJoin([
       this._firebaseService.getAllMessages(),
       this._firebaseService.getAllUsers(),
@@ -67,7 +69,7 @@ export class NewsComponent implements OnInit {
 
       this.messages = messages.map((message: any) => {
         const user = userData.find(
-          (user: { email: any }) => user.email === message.userEmail
+          (user: { uid: any }) => user.uid === message.userUID
         );
         return {
           ...message,
@@ -79,6 +81,7 @@ export class NewsComponent implements OnInit {
 
       this.totalRecords = this.messages.length;
       this.onPageChange({ first: 0, rows: 10 });
+      this.loadingBall = false;
     });
   }
 

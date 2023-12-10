@@ -2,31 +2,31 @@
   <div
     class="flex justify-center min-w-full bg-gray-100 rounded-md bg-clip-padding bg-opacity-40 duration-500 text-gray-900 dark:bg-gray-800 dark:rounded-md dark:bg-clip-padding dark:bg-opacity-40 dark:text-gray-100"
   >
-    <div class="w-full py-0 mx-2">
-      <div class="flex justify-center pt-3">
-        <h1 class="p-5 font-bold dark:text-white text-black text-3xl">
-          Dzisiejsze mecze
-        </h1>
-      </div>
+    <app-loading-ball *ngIf="loadingBall; else content"></app-loading-ball>
+    <ng-template #content>
+      <div class="w-full py-0 mx-2">
+        <div class="flex justify-center pt-3">
+          <h1 class="p-5 font-bold dark:text-white text-black text-3xl">
+            Dzisiejsze mecze
+          </h1>
+        </div>
 
-      <div
-        *ngIf="this.matches.length === 0"
-        class="flex justify-center items-center my-3"
-      >
-        <p class="font-bold text-xl text-red-600">Brak meczów na dziś</p>
-      </div>
+        <div
+          *ngIf="this.matches.length === 0"
+          class="flex justify-center items-center my-3"
+        >
+          <p class="font-bold text-xl text-red-600">Brak meczów na dziś</p>
+        </div>
 
-      <ng-container *ngFor="let match of matches">
-        <app-loading-ball *ngIf="loadingBall; else matches"></app-loading-ball>
-        <ng-template #matches>
+        <ng-container *ngFor="let match of matches">
           <app-single-match
             [match]="match"
             (matchDialogOpened)="openMatchDialog($event)"
             (matchStarted)="startMatch($event)"
           ></app-single-match>
-        </ng-template>
-      </ng-container>
-    </div>
+        </ng-container>
+      </div>
+    </ng-template>
   </div>
 </div>
 

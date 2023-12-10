@@ -2,44 +2,47 @@
   <div
     class="flex justify-center min-w-full bg-gray-100 rounded-md bg-clip-padding bg-opacity-40 duration-500 text-gray-900 dark:bg-gray-800 dark:rounded-md dark:bg-clip-padding dark:bg-opacity-40 dark:text-gray-100"
   >
-    <div class="w-100 lg:w-1/2 py-0 mx-auto">
-      <div class="flex justify-center pt-3">
-        <h1 class="p-5 font-bold dark:text-white text-black text-3xl">
-          Tabela
-        </h1>
-      </div>
-      <div
-        *ngIf="this.results.length === 0"
-        class="flex justify-center items-center my-3"
-      >
-        <p class="font-bold text-xl text-red-600">Brak wyników</p>
-      </div>
-      <ng-container *ngFor="let team of results; let i = index">
-        <div [ngClass]="getTeamClass(i)" class="rounded-lg flex p-3 my-3">
-          <div class="flex flex-grow justify-between items-center">
-            <div class="flex gap-10 items-center w-1/2">
-              <h1 class="text-lg font-bold">
-                {{ i + 1 }}
-              </h1>
-              <div class="flex gap-10 items-center">
-                <img [src]="team.img" alt="team img" class="w-12 h-12" />
+    <app-loading-ball *ngIf="loadingBall; else content"></app-loading-ball>
+    <ng-template #content>
+      <div class="w-100 lg:w-1/2 py-0 mx-auto">
+        <div class="flex justify-center pt-3">
+          <h1 class="p-5 font-bold dark:text-white text-black text-3xl">
+            Tabela
+          </h1>
+        </div>
+        <div
+          *ngIf="this.results.length === 0"
+          class="flex justify-center items-center my-3"
+        >
+          <p class="font-bold text-xl text-red-600">Brak wyników</p>
+        </div>
+        <ng-container *ngFor="let team of results; let i = index">
+          <div [ngClass]="getTeamClass(i)" class="rounded-lg flex p-3 my-3">
+            <div class="flex flex-grow justify-between items-center">
+              <div class="flex gap-10 items-center w-1/2">
                 <h1 class="text-lg font-bold">
-                  {{ team.name }}
+                  {{ i + 1 }}
                 </h1>
+                <div class="flex gap-10 items-center">
+                  <img [src]="team.img" alt="team img" class="w-12 h-12" />
+                  <h1 class="text-lg font-bold">
+                    {{ team.name }}
+                  </h1>
+                </div>
+              </div>
+              <div class="flex justify-end gap-1 w-1/4">
+                <h1>{{ team.lostGoals }}</h1>
+                <h1>-</h1>
+                <h1>{{ team.scoredGoals }}</h1>
+              </div>
+              <div class="flex justify-end w-1/4">
+                <h1 class="text-lg font-bold">{{ team.points }} pkt</h1>
               </div>
             </div>
-            <div class="flex justify-end gap-1 w-1/4">
-              <h1>{{ team.lostGoals }}</h1>
-              <h1>-</h1>
-              <h1>{{ team.scoredGoals }}</h1>
-            </div>
-            <div class="flex justify-end w-1/4">
-              <h1 class="text-lg font-bold">{{ team.points }} pkt</h1>
-            </div>
           </div>
-        </div>
-      </ng-container>
-    </div>
+        </ng-container>
+      </div>
+    </ng-template>
   </div>
 </div>
 

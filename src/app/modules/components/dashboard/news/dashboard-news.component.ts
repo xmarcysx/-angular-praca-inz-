@@ -14,6 +14,7 @@ export class DashboardNews implements OnInit {
   results: any[] = [];
   message!: any;
   totalRecords!: number;
+  loadingBall: boolean = false;
 
   constructor(
     private _firebaseService: FirebaseService,
@@ -25,6 +26,7 @@ export class DashboardNews implements OnInit {
   }
 
   getAllMessages() {
+    this.loadingBall = true;
     forkJoin([
       this._firebaseService.getAllMessages(),
       this._firebaseService.getAllUsers(),
@@ -34,7 +36,7 @@ export class DashboardNews implements OnInit {
 
       this.messages = messages.map((message: any) => {
         const user = userData.find(
-          (user: { email: any }) => user.email === message.userEmail
+          (user: { uid: any }) => user.uid === message.userUID
         );
         return {
           ...message,
@@ -44,6 +46,7 @@ export class DashboardNews implements OnInit {
 
       this.totalRecords = this.messages.length;
       this.onPageChange({ first: 0, rows: 5 });
+      this.loadingBall = false;
     });
   }
 

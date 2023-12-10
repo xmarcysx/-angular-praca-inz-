@@ -2,54 +2,57 @@
   <div
     class="flex justify-center min-w-full bg-gray-100 rounded-md bg-clip-padding bg-opacity-40 duration-500 text-gray-900 dark:bg-gray-800 dark:rounded-md dark:bg-clip-padding dark:bg-opacity-40 dark:text-gray-100"
   >
-    <div class="w-4/5 py-0 mx-auto">
-      <div class="flex justify-center pt-3">
-        <h1 class="p-5 font-bold dark:text-white text-black text-3xl">
-          Wiadomości
-        </h1>
-      </div>
-
-      <div
-        *ngIf="this.messages.length === 0"
-        class="flex justify-center items-center my-3"
-      >
-        <p class="font-bold text-xl text-red-600">Brak wiadomości</p>
-      </div>
-
-      <ng-container *ngFor="let message of results">
-        <div class="bg-white dark:bg-black rounded-lg flex p-3 my-3">
-          <div class="h-100 mt-1 items-start mr-3 text-sm rounded-full">
-            <img
-              class="w-9 h-9 rounded-full bg-white"
-              src="{{
-                message.user?.img !== ''
-                  ? message.user?.img
-                  : '../../../../assets/images/userProfile.png'
-              }}"
-              alt="User Photo"
-            />
-          </div>
-          <div class="flex flex-col flex-grow">
-            <div class="flex justify-between items-center">
-              <h1 class="text-md font-bold">
-                {{ message.user.username }}
-              </h1>
-            </div>
-            <div
-              class="dashboard-message text-sm"
-              [innerHTML]="message.message"
-            ></div>
-          </div>
+    <app-loading-ball *ngIf="loadingBall; else content"></app-loading-ball>
+    <ng-template #content>
+      <div class="w-4/5 py-0 mx-auto">
+        <div class="flex justify-center pt-3">
+          <h1 class="p-5 font-bold dark:text-white text-black text-3xl">
+            Wiadomości
+          </h1>
         </div>
-      </ng-container>
-      <div *ngIf="this.messages.length !== 0" class="flex justify-center">
-        <p
-          routerLink="/forum"
-          class="cursor-pointer text-blue-700 hover:text-blue-800 text-lg"
+
+        <div
+          *ngIf="this.messages.length === 0"
+          class="flex justify-center items-center my-3"
         >
-          Zobacz więcej
-        </p>
+          <p class="font-bold text-xl text-red-600">Brak wiadomości</p>
+        </div>
+
+        <ng-container *ngFor="let message of results">
+          <div class="bg-white dark:bg-black rounded-lg flex p-3 my-3">
+            <div class="h-100 mt-1 items-start mr-3 text-sm rounded-full">
+              <img
+                class="w-9 h-9 rounded-full bg-white"
+                src="{{
+                  message.user?.img !== ''
+                    ? message.user?.img
+                    : '../../../../assets/images/userProfile.png'
+                }}"
+                alt="User Photo"
+              />
+            </div>
+            <div class="flex flex-col flex-grow">
+              <div class="flex justify-between items-center">
+                <h1 class="text-md font-bold">
+                  {{ message.user.username }}
+                </h1>
+              </div>
+              <div
+                class="dashboard-message text-sm"
+                [innerHTML]="message.message"
+              ></div>
+            </div>
+          </div>
+        </ng-container>
+        <div *ngIf="this.messages.length !== 0" class="flex justify-center">
+          <p
+            routerLink="/forum"
+            class="cursor-pointer text-blue-700 dark:text-white hover:text-blue-800 dark:hover:text-yellow-300 text-lg"
+          >
+            Zobacz więcej
+          </p>
+        </div>
       </div>
-    </div>
+    </ng-template>
   </div>
 </div>

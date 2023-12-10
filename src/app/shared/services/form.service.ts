@@ -29,4 +29,22 @@ export class FormService {
       nameForm.controls[controlName].setErrors(null);
     });
   }
+
+  matchStarted(match: any) {
+    this._messageService.add({
+      id: 'custom',
+      severity: 'custom',
+      summary: 'Mecz się rozpoczął',
+      detail: `${match.homeTeam.name} vs ${match.awayTeam.name}`,
+    });
+  }
+
+  matchFinished(match: any) {
+    this._messageService.add({
+      id: 'custom',
+      severity: 'custom',
+      summary: 'Mecz się zakończył',
+      detail: `${match.homeTeam.name} vs ${match.awayTeam.name}`,
+    });
+  }
 }

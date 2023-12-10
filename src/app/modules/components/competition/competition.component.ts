@@ -8,6 +8,7 @@ import { FirebaseService } from 'src/app/shared/services/firebase.service';
 })
 export class CompetitionComponent implements OnInit {
   results: any[] = [];
+  loadingBall: boolean = false;
 
   constructor(
     private _firebaseService: FirebaseService,
@@ -19,6 +20,7 @@ export class CompetitionComponent implements OnInit {
   }
 
   private _getAllTeamsTable() {
+    this.loadingBall = true;
     this._firebaseService
       .getAllTeamsForCompetition()
       .pipe(
@@ -28,6 +30,7 @@ export class CompetitionComponent implements OnInit {
       )
       .subscribe((sortedTeams) => {
         this.results = sortedTeams;
+        this.loadingBall = false;
       });
   }
 

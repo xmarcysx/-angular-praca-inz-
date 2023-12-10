@@ -42,10 +42,6 @@ export class RegistrationComponent {
             'Wystąpił błąd podczas rejestracji'
           );
         }
-        this._formService.showSuccess(
-          'Sukces',
-          'Użytkownik został zarejestrowany'
-        );
         this._resetForm();
       } else {
         this.required = false;
@@ -108,9 +104,6 @@ export class RegistrationComponent {
     const email = this.registrationForm.value.email;
     const password = this.registrationForm.value.password;
     const username = this.registrationForm.value.username;
-    const uid = this._authService.signUp(email, password);
-    setTimeout(() => {
-      this._firebaseService.addUserToDatabase(username, email, uid);
-    }, 1000);
+    this._authService.signUp(email, password, username);
   }
 }
