@@ -6,6 +6,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { log } from 'firebase-functions/logger';
+import { user } from 'firebase-functions/v1/auth';
 import { MessageService } from 'primeng/api';
 import { forkJoin, map } from 'rxjs';
 import { AuthService } from 'src/app/shared/services/auth.service';
@@ -45,6 +46,7 @@ export class NewsComponent implements OnInit {
 
   saveTheMessage() {
     const email = this._authService.email;
+    console.log(email);
     this._firebaseService.addMessageToDatabase(email, this.message);
     this.message = '';
     this.visible = false;

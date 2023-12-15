@@ -1,14 +1,11 @@
 <div class="bg-white dark:bg-black rounded-lg flex p-2 my-3">
   <div class="flex flex-grow items-center">
     <div class="flex flex-grow justify-between items-center">
-      <div class="flex flex-col items-center ml-3" style="width: 5%">
+      <div class="flex flex-col items-center ml-3" style="width: 10%">
         <h1 class="font-bold">{{ match.startTime }}</h1>
       </div>
 
-      <div
-        class="flex gap-3 lg:gap-10 justify-center items-center"
-        style="width: 35%"
-      >
+      <div class="flex gap-3 lg:gap-10 items-center" style="width: 30%">
         <img [src]="match.homeTeam.img" alt="HomeTeamImg" class="w-12 h-12" />
         <h1 class="text-lg font-bold hidden lg:block">
           {{ match.homeTeam.name }}
@@ -80,8 +77,8 @@
         </div>
       </div>
       <div
-        class="flex gap-3 lg:gap-10 items-center justify-center"
-        style="width: 35%"
+        class="flex gap-3 lg:gap-10 lg:w-8 items-center justify-end"
+        style="width: 30%"
       >
         <h1 class="text-lg font-bold hidden lg:block">
           {{ match.awayTeam.name }}
@@ -90,7 +87,7 @@
       </div>
       <div
         class="flex gap-3 lg:gap-10 justify-end items-center"
-        style="width: 5%"
+        style="width: 10%"
       ></div>
     </div>
   </div>

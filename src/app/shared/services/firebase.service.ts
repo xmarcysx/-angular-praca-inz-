@@ -38,7 +38,7 @@ export class FirebaseService {
         username: username,
         img: '',
         disabled: false,
-        uid: uid.__zone_symbol__value,
+        uid: uid,
       })
       .subscribe();
   }
@@ -415,12 +415,44 @@ export class FirebaseService {
     const urlAwayTeam = `${environment.firebaseConfig.databaseURL}/teams/${awayTeamId}.json`;
 
     if (homeGoals > awayGoals) {
-      this._http.get(urlHomeTeam).subscribe((res: any) => {
-        this._http.patch(urlHomeTeam, { points: res.points + 3 }).subscribe();
+      forkJoin([
+        this._http.get(urlHomeTeam),
+        this._http.get(urlAwayTeam),
+      ]).subscribe(([homeTeamData, awayTeamData]: [any, any]) => {
+        this._http
+          .patch(urlHomeTeam, {
+            points: homeTeamData.points + 3,
+            scoredGoals: homeTeamData.scoredGoals + homeGoals,
+            lostGoals: homeTeamData.lostGoals + awayGoals,
+          })
+          .subscribe();
+        this._http
+          .patch(urlAwayTeam, {
+            points: awayTeamData.points + 0,
+            scoredGoals: awayTeamData.scoredGoals + awayGoals,
+            lostGoals: awayTeamData.lostGoals + homeGoals,
+          })
+          .subscribe();
       });
     } else if (homeGoals < awayGoals) {
-      this._http.get(urlAwayTeam).subscribe((res: any) => {
-        this._http.patch(urlAwayTeam, { points: res.points + 3 }).subscribe();
+      forkJoin([
+        this._http.get(urlHomeTeam),
+        this._http.get(urlAwayTeam),
+      ]).subscribe(([homeTeamData, awayTeamData]: [any, any]) => {
+        this._http
+          .patch(urlHomeTeam, {
+            points: homeTeamData.points + 0,
+            scoredGoals: homeTeamData.scoredGoals + homeGoals,
+            lostGoals: homeTeamData.lostGoals + awayGoals,
+          })
+          .subscribe();
+        this._http
+          .patch(urlAwayTeam, {
+            points: awayTeamData.points + 3,
+            scoredGoals: awayTeamData.scoredGoals + awayGoals,
+            lostGoals: awayTeamData.lostGoals + homeGoals,
+          })
+          .subscribe();
       });
     } else {
       forkJoin([
@@ -428,10 +460,18 @@ export class FirebaseService {
         this._http.get(urlAwayTeam),
       ]).subscribe(([homeTeamData, awayTeamData]: [any, any]) => {
         this._http
-          .patch(urlHomeTeam, { points: homeTeamData.points + 1 })
+          .patch(urlHomeTeam, {
+            points: homeTeamData.points + 1,
+            scoredGoals: homeTeamData.scoredGoals + homeGoals,
+            lostGoals: homeTeamData.lostGoals + awayGoals,
+          })
           .subscribe();
         this._http
-          .patch(urlAwayTeam, { points: awayTeamData.points + 1 })
+          .patch(urlAwayTeam, {
+            points: awayTeamData.points + 1,
+            scoredGoals: awayTeamData.scoredGoals + homeGoals,
+            lostGoals: awayTeamData.lostGoals + awayGoals,
+          })
           .subscribe();
       });
     }

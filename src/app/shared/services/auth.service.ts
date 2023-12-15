@@ -6,6 +6,7 @@ import { LoginStorageService } from './login-storage.service';
 import { FirebaseService } from './firebase.service';
 import { Observable, Subject } from 'rxjs';
 import { FormService } from './form.service';
+import { log } from 'firebase-functions/logger';
 
 @Injectable({
   providedIn: 'root',

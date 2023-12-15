@@ -48,7 +48,7 @@
           </div>
         </ng-container>
         <p-paginator
-          *ngIf="this.messages?.length"
+          *ngIf="this.messages.length > 10"
           (onPageChange)="onPageChange($event)"
           [first]="0"
           [rows]="10"
