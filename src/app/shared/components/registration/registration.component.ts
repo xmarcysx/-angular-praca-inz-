@@ -30,8 +30,8 @@ export class RegistrationComponent {
 
   async onSubmit() {
     if (this.registrationForm.valid) {
+      this.loadingBall = true;
       if (this._passwordsMatchCheck()) {
-        this.loadingBall = true;
         this.required = false;
         try {
           await this._registerUser();
@@ -95,15 +95,14 @@ export class RegistrationComponent {
   private _resetForm() {
     this.registrationForm.reset();
     this._formService.clearAllErrors(this.registrationForm);
-    setTimeout(() => {
-      this.loadingBall = false;
-    }, 1500);
   }
 
   private async _registerUser() {
     const email = this.registrationForm.value.email;
     const password = this.registrationForm.value.password;
     const username = this.registrationForm.value.username;
-    this._authService.signUp(email, password, username);
+    this._authService.signUp(email, password, username).then(() => {
+      this.loadingBall = false;
+    });
   }
 }

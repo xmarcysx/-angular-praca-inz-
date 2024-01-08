@@ -67,7 +67,7 @@ app-about-us,
 app-contact,
 app-privacy-policy,
 app-terms {
-  width: fit-content;
+  width: 60vw;
   overflow-y: auto;
   margin: auto;
 
@@ -91,6 +91,10 @@ app-terms {
   &::-webkit-scrollbar-thumb {
     background: var(--sb-thumb-color);
     border-radius: 5px;
+  }
+
+  @media screen and (max-width: 768px) {
+    width: fit-content;
   }
 }
 
